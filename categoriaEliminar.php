@@ -2,7 +2,6 @@
 
 require_once "_com/dao.php";
 
-
 // Se recoge el parámetro "id" de la request.
 $id = (int)$_REQUEST["id"];
 
