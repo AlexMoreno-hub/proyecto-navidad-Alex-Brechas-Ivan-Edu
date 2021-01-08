@@ -1,11 +1,12 @@
 <?php
 
-require_once "_com/dao.php";
+require_once "_com/DAO.php";
+require_once "_com/_varios.php";
 
 // Se recoge el parámetro "id" de la request.
 $id = (int)$_REQUEST["id"];
 
-$resultado = dao::categoriaEliminar($id);
+$resultado = DAO::categoriaEliminar($id);
 ?>
 
 
@@ -20,12 +21,12 @@ $resultado = dao::categoriaEliminar($id);
 
 <body>
 
-<?php if ($resultado == 1) { ?>
+<?php if ($resultado) { ?>
 
     <h1>Eliminación completada</h1>
     <p>Se ha eliminado correctamente la categoría.</p>
 
-<?php } else if ($resultado == 0) { ?>
+<?php } else if (!$resultado) { ?>
 
     <h1>Eliminación no realizada</h1>
     <p>No existe la categoría que se pretende eliminar (quizá la eliminaron en paraleo o, ¿ha manipulado Vd. el parámetro id?).</p>
