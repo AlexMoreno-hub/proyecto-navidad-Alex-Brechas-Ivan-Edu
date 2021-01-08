@@ -115,4 +115,14 @@ class DAO
 
         return $resultado;
     }
+
+    public static function jugadorEliminar(int $id): ?int
+    {
+        $resultado = self::ejecutarActualizacion(
+            "DELETE FROM Jugador WHERE id=?",
+            [$id]
+        );
+
+        return $resultado;
+    }
 }
