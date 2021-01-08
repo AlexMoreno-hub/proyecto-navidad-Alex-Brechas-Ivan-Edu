@@ -72,6 +72,7 @@ class DAO
         else return null;
     }
 
+
     public static function categoriaActualizar($id, $nombre)
     {
         self::ejecutarActualizacion(
@@ -120,6 +121,15 @@ class DAO
     {
         $resultado = self::ejecutarActualizacion(
             "DELETE FROM Jugador WHERE id=?",
+            [$id]
+        );
+
+        return $resultado;
+    }
+    public static function equipoEliminar(int $id): ?int
+    {
+        $resultado = self::ejecutarActualizacion(
+            "DELETE FROM equipo WHERE id=?",
             [$id]
         );
 

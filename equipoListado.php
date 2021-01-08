@@ -1,10 +1,10 @@
 <?php
-
 require_once "_com/_varios.php";
+
 
 $conexion= obtenerPdoConexionBD();
 
-$sql = "SELECT id, nombre FROM categoria ORDER BY nombre";
+$sql = "SELECT id, nombre FROM equipo ORDER BY nombre";
 
 $select = $conexion->prepare($sql);
 $select->execute([]);
@@ -20,7 +20,7 @@ $rs = $select->fetchAll();
 
 <body>
 
-<h1>Listado de Posiciones</h1>
+<h1>Listado de Equipos</h1>
 
 <table border='1'>
 
@@ -30,8 +30,8 @@ $rs = $select->fetchAll();
 
     <?php foreach ($rs as $fila) { ?>
         <tr>
-            <td><a href='categoriaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"] ?> </a></td>
-            <td><a href='categoriaEliminar.php?id=<?=$fila["id"]?>'> (X)</a></td>
+            <td><a href='equipoFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"] ?> </a></td>
+            <td><a href='equipoEliminar.php?id=<?=$fila["id"]?>'> (X)</a></td>
         </tr>
     <?php } ?>
 
@@ -39,7 +39,7 @@ $rs = $select->fetchAll();
 
 <br />
 
-<a href='categoriaFicha.php?id=-1'>Crear entrada</a>
+<a href='equipoFicha.php?id=-1'>Crear entrada</a>
 
 <br />
 <br />
@@ -47,7 +47,7 @@ $rs = $select->fetchAll();
 <a href='jugadorListado.php'>Gestionar listado de Jugadores</a>
 <br />
 <br />
-<a href="equipoListado.php">Gestionar equipos</a>
+<a href="categoriaListado.php">Gestionar listado de posciones</a>
 
 </body>
 
