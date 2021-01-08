@@ -7,6 +7,11 @@ require_once "_com/_varios.php";
 $id = (int)$_REQUEST["id"];
 
 $resultado = DAO::categoriaEliminar($id);
+
+if($resultado)
+    redireccionar("categoriaListado.php?eliminacionCorrecta");
+else
+    redireccionar("categoriaListado.php?eliminacionErronea");
 ?>
 
 
