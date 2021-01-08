@@ -96,7 +96,6 @@ $rsCategorias = $select->fetchAll();
 
             echo "<option value='$categoriaId' $seleccion>$categoriaNombre</option>";
 
-
         }
         ?>
     </select>

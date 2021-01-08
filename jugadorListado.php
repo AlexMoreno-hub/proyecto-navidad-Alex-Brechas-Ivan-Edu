@@ -62,6 +62,7 @@ $rs = $select->fetchAll();
         <th>Apellidos</th>
         <th>Categoría</th>
         <th>Dorsal</th>
+        <th>Equipo</th>
         <th>Eliminar</th>
 
     </tr>
@@ -84,6 +85,7 @@ $rs = $select->fetchAll();
             <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pApellidos"] ?> </a></td>
             <td><a href='categoriaFicha.php?id=<?=$fila["cId"]?>'> <?= $fila["cNombre"] ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pDorsal"] ?> </a></td>
+            <td></td>
             <td><a href='jugadorEliminar.php?id=<?=$fila["pId"]?>'> (X)                      </a></td>
         </tr>
     <?php } ?>
