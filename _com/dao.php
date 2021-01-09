@@ -129,12 +129,9 @@ class DAO
 
         return $resultado;
     }
-<<<<<<< HEAD
-=======
-
 
     /////EQUIPO//////
->>>>>>> main
+
     public static function equipoEliminar(int $id): ?int
     {
         $resultado = self::ejecutarActualizacion(
@@ -144,8 +141,5 @@ class DAO
 
         return $resultado;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 }
