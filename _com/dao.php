@@ -2,7 +2,6 @@
 
 require_once "_varios.php";
 
-
 class DAO
 {
     private static $pdo = null;
