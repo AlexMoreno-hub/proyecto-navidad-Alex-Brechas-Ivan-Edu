@@ -3,6 +3,7 @@ require_once "_com/_varios.php";
 
 $conexion = obtenerPdoConexionBD();
 
+
 // Se recogen los datos del formulario de la request.
 $id = (int)$_REQUEST["id"];
 $nombre = $_REQUEST["nombre"];

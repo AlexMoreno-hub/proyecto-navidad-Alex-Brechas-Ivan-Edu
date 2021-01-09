@@ -2,6 +2,7 @@
 
 require_once "_varios.php";
 
+
 class DAO
 {
     private static $pdo = null;
@@ -117,6 +118,8 @@ class DAO
         return $resultado;
     }
 
+
+    ///////JUGADOR/////////
     public static function jugadorEliminar(int $id): ?int
     {
         $resultado = self::ejecutarActualizacion(
@@ -126,6 +129,9 @@ class DAO
 
         return $resultado;
     }
+
+
+    /////EQUIPO//////
     public static function equipoEliminar(int $id): ?int
     {
         $resultado = self::ejecutarActualizacion(
@@ -135,4 +141,5 @@ class DAO
 
         return $resultado;
     }
+
 }
