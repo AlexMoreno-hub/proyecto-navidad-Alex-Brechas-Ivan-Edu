@@ -13,4 +13,3 @@ else
     redireccionar("equipoListado.php?eliminacionErronea");
 ?>
 
-?>

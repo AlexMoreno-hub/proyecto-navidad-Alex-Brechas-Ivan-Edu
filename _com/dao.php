@@ -54,7 +54,6 @@ class DAO
     }
 
 
-
     /* CATEGORÍA */
 
     private static function categoriaCrearDesdeRs(array $fila): Categoria
@@ -139,6 +138,20 @@ class DAO
         );
 
         return $resultado;
+    }
+
+    public static function agregarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
+    {
+        self::ejecutarActualizacion("INSERT INTO jugador (nombre, apellidos, dorsal,lesionado,categoriaId,equipoId)
+            VALUES (?, ?, ?, ?, ?, ?);",
+            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
+    }
+
+    public static function modificarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
+    {
+        self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=?, lesionado=?, categoriaId=? , equipoId=? WHERE id=?)
+            VALUES (?, ?, ?, ?, ?, ?);",
+            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
     }
 
 }

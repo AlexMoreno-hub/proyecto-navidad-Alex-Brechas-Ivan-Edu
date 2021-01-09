@@ -1,5 +1,28 @@
 <?php
-require_once "_varios.php";
+
+require_once "_com/dao.php";
+require_once "_com/_varios.php";
+
+// Se recoge el parámetro "id" de la request.
+$nombre = $_REQUEST["nombre"];
+$apellidos = $_REQUEST["apellidos"];
+$dorsal = $_REQUEST["dorsal"];
+$categoriaId = (int)$_REQUEST["categoriaId"];
+$equipoId=(int)$_REQUEST["equipoId"];
+$lesionado = isset($_REQUEST["lesionado"]);
+
+
+$resultado = DAO::agregarJugador($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
+if($resultado)
+    redireccionar("jugadorListado.php?eliminacionCorrecta");
+else
+    redireccionar("jugadorListado.php?eliminacionErronea");
+
+
+/*
+require_once "_com/_varios.php";
+
+// Se recoge el parámetro "id" de la request.
 
 $conexion = obtenerPdoConexionBD();
 
@@ -39,8 +62,6 @@ $correcto = ($sqlConExito && $unaFilaAfectada);
 
 $datosNoModificados = ($sqlConExito && $ningunaFilaAfectada);
 ?>
-
-
 
 <html>
 
@@ -85,3 +106,5 @@ if ($correcto || $datosNoModificados) { ?>
 </body>
 
 </html>
+?>*/
+?>

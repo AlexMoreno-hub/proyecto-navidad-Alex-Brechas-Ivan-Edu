@@ -1,6 +1,6 @@
 <?php
 
-require_once "_com/DAO.php";
+require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
 // Se recoge el parámetro "id" de la request.
@@ -13,3 +13,4 @@ if($resultado)
 else
     redireccionar("jugadorListado.php?eliminacionErronea");
 ?>
+

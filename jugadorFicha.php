@@ -1,5 +1,6 @@
 <?php
 
+
 require_once "_com/_varios.php";
 
 $conexion = obtenerPdoConexionBD();
@@ -129,3 +130,4 @@ $rsCategorias = $select->fetchAll();
 </body>
 
 </html>
+
