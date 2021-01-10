@@ -18,6 +18,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorLesioando=false;
 
     $jugadorCategoriaId = 0;
+    $jugadorEquipoId = 0;
 } else { // Quieren VER la ficha de una persona existente, cuyos datos se cargan.
     $sqlPersona = "SELECT nombre, apellidos, dorsal, lesionado , equipoId ,categoriaId FROM jugador WHERE id=?";
 
@@ -32,6 +33,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorLesioando = ($rsJugador[0]["lesionado"] == 1);
     $jugadorEquipo =$rsJugador[0]["equipoId"];
     $jugadorCategoriaId = $rsJugador[0]["categoriaId"];
+    $jugadorEquipoId = $rsJugador[0]["equipoId"];
 }
 
 
@@ -44,6 +46,12 @@ $select->execute([]);
 $rsCategorias = $select->fetchAll();
 
 
+
+$sqlEquipo = "SELECT id, nombre FROM equipo ORDER BY nombre";
+
+$select = $conexion->prepare($sqlEquipo);
+$select->execute([]);
+$rsEquipo = $select->fetchAll();
 
 // INTERFAZ:
 // jugadorNombre , apellidos..
@@ -109,8 +117,24 @@ $rsCategorias = $select->fetchAll();
     <input type='checkbox' name='lesionado' <?= $jugadorLesioando ? "checked" : "" ?> />
     <br/>
 
-    <label for='equipo'> Equipo: </label>
-    <input type='text' name='equipo' value='<?=$jugadorEquipo ?>' />
+
+    <label for='equipoId'>Equipo: </label>
+    <select name='equipoId'>
+        <?php
+        foreach ($rsEquipo as $filaEquipo) {
+            $equipoId = (int)$filaEquipo["id"];
+            $equipoNombre = $filaEquipo["nombre"];
+
+            if ($equipoId == $jugadorEquipoId) $seleccion = "selected='true'";
+            else                                     $seleccion = "";
+
+            echo "<option value='$equipoId' $seleccion>$equipoNombre</option>";
+
+        }
+        ?>
+    </select>
+
+
     <br/>
 
     <br/>

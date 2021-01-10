@@ -77,6 +77,26 @@ INSERT INTO `jugador` (`id`, `nombre`, `apellidos`, `dorsal`, `lesionado`, `cate
 (10, 'Jose', 'Gimenez', '2', 0, 2,3);
 
 
+CREATE TABLE `cliente` (
+  `idCliente` int(10) NOT NULL,
+  `usuarioCliente` varchar(25) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `emailCliente` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `contrasennaCliente` varchar(80) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `codigoCookieCliente` varchar(80) COLLATE utf8mb4_spanish2_ci,
+  `fotoDePerfilCliente` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `nombreCliente` varchar(20) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `apellidosCliente` varchar(20) COLLATE utf8mb4_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `usuarioCliente`, `emailCliente`, `contrasennaCliente`, `codigoCookieCliente`, `fotoDePerfilCliente`, `nombreCliente`, `apellidosCliente`) VALUES
+(4, 'a', 'a', '$2y$10$E3tvrmh3oOMlyAIbJcoM9OWaHcVu/kzdpE7Yt33ovRuD5eof0I1qq', '', 'a.jpg', 'a', 'a'),
+(5, 'b', 'b', '$2y$10$YGyvxrOXe06JgdzW20nE3OT2KObnteubGG9qJzVW7DJbZZde67iA.', '', 'b.jpg', 'b', 'b'),
+(6, 'c', 'c', '$2y$10$7LDtrBZY8sRbObQw.2ORwuJqM1LGxFxBxZ3SRv/9jQ5Rl8EEBu/C2', '', 'c.jpg', 'c', 'c');
+
 
 ALTER TABLE `jugador`
     ADD CONSTRAINT `fk_categoriaId` FOREIGN KEY (`categoriaId`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

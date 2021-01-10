@@ -27,7 +27,7 @@ class DAO
 
         return $pdo;
     }
-
+/*
     private static function ejecutarConsulta(string $sql, array $parametros): array
     {
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
@@ -37,7 +37,7 @@ class DAO
         $rs = $select->fetchAll();
 
         return $rs;
-    }
+    }*/
 
     // Devuelve:
     //   - null: si ha habido un error
@@ -52,6 +52,133 @@ class DAO
         if (!$sqlConExito) return null;
         else return $actualizacion->rowCount();
     }
+
+    /*---------- Funciones generales ----------*/
+    public static function anotarCookieEnBDD($codigoCookie, $idUsuario): bool
+    {
+        $pdo = DAO::obtenerPdoConexionBD();
+        if ($codigoCookie == "NULL") {
+            $codigoCookie = NULL;
+        }
+        $sqlSentencia = "UPDATE cliente SET codigoCookieCliente=? WHERE idCliente=?";
+
+        $sqlUpdate = $pdo->prepare($sqlSentencia);
+        $sqlUpdate->execute([$codigoCookie, $idUsuario]);
+        if ($sqlUpdate->rowCount() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function iniciarSessionConCookie(): bool
+    {
+        if (isset($_COOKIE["usuarioCliente"]) && isset($_COOKIE["clave"])) {
+            $usuarioCliente = $_COOKIE["usuarioCliente"];
+            $codigoCookie = $_COOKIE["clave"];
+            $arrayUsuario = DAO::obtenerClienteConUsuario($usuarioCliente); //Obtener usuario con el identificador de la cookie
+            // Si hay un usuario con el identificador de la cookie
+            // Y ademas coincide el codigoCookie de la BDD y el codigoCookie de la cookie
+            if ($arrayUsuario && $arrayUsuario[0]["codigoCookieCliente"] == $codigoCookie) {
+                DAO::generarCookieRecordar($arrayUsuario); // Generamos otro codigo y renovamos la cookie
+                return true;
+            } else {
+                DAO::borrarCookieRecordar($arrayUsuario); // Borranos la cookie
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function haySesionIniciada(): bool
+    {
+        if (isset($_SESSION["usuarioCliente"])) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public static function borrarCookieRecordar(array $arrayUsuario)
+    {
+        // Eliminar el código cookie de nuestra BD.
+        $idCliente = $arrayUsuario[0]["idCliente"];
+        DAO::anotarCookieEnBDD("NULL", $idCliente);
+        // Pedir borrar cookie (setcookie con tiempo time() - negativo...)
+        setcookie("identificador", "", time() - 86400);
+        setcookie("clave", "", time() - 86400);
+    }
+
+    public static function CerrarSesion()
+    {
+        // funcion que elimina sesion iniciada
+        session_start();
+        session_unset();
+        session_destroy();
+    }
+
+    public static function generarCookieRecordar(array $arrayUsuario)
+    {
+        // Creamos un código cookie muy complejo (no necesariamente único).
+        $codigoCookie = generarCadenaAleatoria(32); // Random...
+        $idCliente = $arrayUsuario[0]["idCliente"];
+        // actualizar el codigoCookie en la BDD
+        DAO::anotarCookieEnBDD($codigoCookie, $idCliente);
+        // anotar la cookie en el navegador
+        $usuarioCliente = $arrayUsuario[0]["usuarioCliente"];
+        $valorCookie = $codigoCookie;
+        setcookie("usuarioCliente", $usuarioCliente, time() + 86400);
+        setcookie("clave", $valorCookie, time() + 86400);
+    }
+    public static function marcarSesionComoIniciada($arrayUsuario)
+    {
+        $_SESSION["idCliente"] = $arrayUsuario[0]["idCliente"];
+        $_SESSION["usuarioCliente"] = $arrayUsuario[0]["usuarioCliente"];
+        $_SESSION["nombreCliente"] = $arrayUsuario[0]["nombreCliente"];
+        $_SESSION["apellidosCliente"] = $arrayUsuario[0]["apellidosCliente"];
+    }
+
+    public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
+    {
+        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
+
+        $sentencia = DAO::$pdo->prepare($sql);
+        $sentencia->execute($parametros);
+        $resultado = $sentencia->fetchAll();
+        return $resultado;
+    }
+    public static function ejecutarConsultaActualizar(string $sql, array $parametros): int
+    {
+        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
+
+        $sentencia = DAO::$pdo->prepare($sql);
+        $sentencia->execute($parametros);
+        return $sentencia->rowCount();
+    }
+
+    /*NUEVO USUARIO*/
+
+
+    /*--------------------------- FUNCIONES PARA CLIENTE ------------------------------*/
+    public static function obtenerClienteConUsuario(string $usuarioCliente): ?array
+    {
+        $pdo = DAO::obtenerPdoConexionBD();
+        $sql = "SELECT * FROM cliente WHERE usuarioCliente='$usuarioCliente' ";
+        $select = $pdo->prepare($sql);
+        $select->execute([]);
+        $resultados = $select->fetchAll();
+        return $resultados;
+    }
+    public static function obtenerCliente(string $usuarioCliente, string $emailCliente): ?array
+    {
+        $pdo = DAO::obtenerPdoConexionBD();
+        $sql = "SELECT * FROM cliente WHERE usuarioCliente='$usuarioCliente' OR emailCliente='$emailCliente'";
+        $select = $pdo->prepare($sql);
+        $select->execute([]);
+        $resultados = $select->fetchAll();
+        return $resultados;
+    }
+
+
 
 
     /* CATEGORÍA */
@@ -115,6 +242,8 @@ class DAO
 
         return $resultado;
     }
+
+
 
 
     ///////JUGADOR/////////
