@@ -70,25 +70,6 @@ class DAO
             return false;
         }
     }
-  /*  public static function iniciarSessionConCookie(): bool
-    {
-        if (isset($_COOKIE["usuarioCliente"]) && isset($_COOKIE["clave"])) {
-            $usuarioCliente = $_COOKIE["usuarioCliente"];
-            $codigoCookie = $_COOKIE["clave"];
-            $arrayUsuario = DAO::obtenerClienteConUsuario($usuarioCliente); //Obtener usuario con el identificador de la cookie
-            // Si hay un usuario con el identificador de la cookie
-            // Y ademas coincide el codigoCookie de la BDD y el codigoCookie de la cookie
-            if ($arrayUsuario && $arrayUsuario[0]["codigoCookieCliente"] == $codigoCookie) {
-                DAO::generarCookieRecordar($arrayUsuario); // Generamos otro codigo y renovamos la cookie
-                return true;
-            } else {
-                DAO::borrarCookieRecordar($arrayUsuario); // Borranos la cookie
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }*/
 
     public static function iniciarSessionConCookie(): bool
     {
@@ -102,7 +83,7 @@ class DAO
                 DAO::generarCookieRecordar($arrayUsuario); // Generamos otro codigo y renovamos la cookie
                 return true;
             } else {
-                DAO::borrarCookieRecordar($arrayUsuario); // Borranos la cookie
+                DAO::borrarCookieRecordar($arrayUsuario); // Borramos la cookie
                 return false;
             }
         } else {
@@ -222,6 +203,7 @@ class DAO
 
         return $datos;
     }
+
 
     public static function categoriaEliminar(int $id): ?int
     {

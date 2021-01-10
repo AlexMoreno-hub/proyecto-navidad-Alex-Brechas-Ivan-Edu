@@ -1,7 +1,6 @@
 <?php
 require_once "_com/dao.php";
-//print_r($_SESSION["idCliente"]);
-/*Si no hay session iniciada redirigimos a la pagina de Iniciar Session*/
+
 
 $idCliente="";
 $nombreCliente="";
@@ -16,7 +15,7 @@ $resultados= DAO::obtenerClienteConUsuario($usuarioCliente);
 if(isset($_POST["recordar"])){
     // DAO::marcarSesionComoIniciada($resultados);
     DAO::generarCookieRecordar($resultados);
-    //redireccionar("ComicListado.php");
+
 }
 /* SI hay un solo resultado---> Inicio session correcto */
 if(count($resultados)==1 && password_verify($contrasennaCliente,$resultados[0]["contrasennaCliente"])){
@@ -24,10 +23,9 @@ if(count($resultados)==1 && password_verify($contrasennaCliente,$resultados[0]["
     $usuarioCliente=(string)$resultados[0]["usuarioCliente"];
     $nombreCliente=(string)$resultados[0]["nombreCliente"];
     $apellidosCliente=(string)$resultados[0]["apellidosCliente"];
-    /*--- funcion abajo tmbn redericiona ---*/
+
     DAO::marcarSesionComoIniciada($resultados);
     redireccionar("categoriaListado.php");
 }else{
-    $_SESSION["txto"]="El usuario o la contraseña no son correctos";
     redireccionar("sesionInicioFormulario.php");
 }
