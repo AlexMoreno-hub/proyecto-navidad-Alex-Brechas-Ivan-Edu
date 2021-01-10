@@ -1,6 +1,22 @@
 <?php
+
+require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
+// Se recoge el parámetro "id" de la request.
+$id= (int)$_REQUEST["id"];
+$nombre = $_REQUEST["nombre"];
+
+
+
+$resultado = DAO::agregarCategoria($id,$nombre);
+if($resultado)
+    redireccionar("categoriaListado.php?eliminacionCorrecta");
+else
+    redireccionar("categoriaListado.php?eliminacionErronea");
+
+
+/*
 $conexion = obtenerPdoConexionBD();
 
 
@@ -83,4 +99,5 @@ if ($correcto || $datosNoModificados) { ?>
 
 </body>
 
-</html>
+</html>*/
+?>

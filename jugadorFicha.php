@@ -14,10 +14,12 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorNombre = "<introduzca nombre>";
     $jugadorApellidos = "<introduzca apellidos>";
     $jugadorDorsal = "<introduzca dorsal>";
+    $jugadorEquipo= "<introduzca equipo>";
     $jugadorLesioando=false;
+
     $jugadorCategoriaId = 0;
 } else { // Quieren VER la ficha de una persona existente, cuyos datos se cargan.
-    $sqlPersona = "SELECT nombre, apellidos, dorsal, lesionado ,categoriaId FROM jugador WHERE id=?";
+    $sqlPersona = "SELECT nombre, apellidos, dorsal, lesionado , equipoId ,categoriaId FROM jugador WHERE id=?";
 
     $select = $conexion->prepare($sqlPersona);
     $select->execute([$id]); // Se añade el parámetro a la consulta preparada.
@@ -28,6 +30,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorApellidos = $rsJugador[0]["apellidos"];
     $jugadorDorsal = $rsJugador[0]["dorsal"];
     $jugadorLesioando = ($rsJugador[0]["lesionado"] == 1);
+    $jugadorEquipo =$rsJugador[0]["equipoId"];
     $jugadorCategoriaId = $rsJugador[0]["categoriaId"];
 }
 
@@ -104,6 +107,10 @@ $rsCategorias = $select->fetchAll();
 
     <label for='lesionado'>Lesionado</label>
     <input type='checkbox' name='lesionado' <?= $jugadorLesioando ? "checked" : "" ?> />
+    <br/>
+
+    <label for='equipo'> Equipo: </label>
+    <input type='text' name='equipo' value='<?=$jugadorEquipo ?>' />
     <br/>
 
     <br/>

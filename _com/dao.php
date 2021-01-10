@@ -140,6 +140,20 @@ class DAO
         return $resultado;
     }
 
+    public static function agregarCategoria($id, $nombre)
+    {
+        self::ejecutarActualizacion("INSERT INTO categoria (id, nombre)
+            VALUES (?, ?);",
+            [$id,$nombre]);
+    }
+
+    public static function agregarEquipo($id, $nombre)
+    {
+        self::ejecutarActualizacion("INSERT INTO equipo (id, nombre)
+            VALUES (?, ?);",
+            [$id,$nombre]);
+    }
+
     public static function agregarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
     {
         self::ejecutarActualizacion("INSERT INTO jugador (nombre, apellidos, dorsal,lesionado,categoriaId,equipoId)

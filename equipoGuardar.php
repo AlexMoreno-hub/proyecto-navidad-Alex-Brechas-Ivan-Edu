@@ -1,6 +1,25 @@
 <?php
+
+require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
+// Se recoge el parámetro "id" de la request.
+$id= (int)$_REQUEST["id"];
+$nombre = $_REQUEST["nombre"];
+
+
+
+$resultado = DAO::agregarEquipo($id,$nombre);
+if($resultado)
+    redireccionar("EquipoListado.php?eliminacionCorrecta");
+else
+    redireccionar("EquipoListado.php?eliminacionErronea");
+
+
+
+
+
+/*
 $conexion = obtenerPdoConexionBD();
 
 // Se recogen los datos del formulario de la request.
@@ -80,3 +99,5 @@ if ($correcto || $datosNoModificados) { ?>
 </body>
 
 </html>
+*/
+?>

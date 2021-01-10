@@ -8,11 +8,11 @@ $nombre = $_REQUEST["nombre"];
 $apellidos = $_REQUEST["apellidos"];
 $dorsal = $_REQUEST["dorsal"];
 $categoriaId = (int)$_REQUEST["categoriaId"];
-$equipoId=(int)$_REQUEST["equipoId"];
+$equipoNombre=(int)$_REQUEST["equipoNombre"];
 $lesionado = isset($_REQUEST["lesionado"]);
 
 
-$resultado = DAO::agregarJugador($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
+$resultado = DAO::agregarJugador($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoNombre);
 if($resultado)
     redireccionar("jugadorListado.php?eliminacionCorrecta");
 else

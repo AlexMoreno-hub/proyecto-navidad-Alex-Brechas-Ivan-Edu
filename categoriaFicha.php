@@ -4,15 +4,14 @@ require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
 $id = (int)$_REQUEST["id"];
-
-
-
+$conexion = obtenerPdoConexionBD();
 
 $nuevaEntrada = ($id == -1);
 
 if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan datos.
 
     $categoriaNombre = "<introduzca nombre>";
+
 } else { // Quieren VER la ficha de una posicion existente, cuyos datos se cargan.
 
     $sql = "SELECT nombre FROM categoria WHERE id=?";
