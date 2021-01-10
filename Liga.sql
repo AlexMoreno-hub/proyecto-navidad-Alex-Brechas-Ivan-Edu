@@ -89,7 +89,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idCliente`, `usuarioCliente`, `contrasennaCliente`, `codigoCookieCliente`) VALUES
-(1, 'alex','a', ''),
+(1, 'alex','$2y$10$E3tvrmh3oOMlyAIbJcoM9OWaHcVu/kzdpE7Yt33ovRuD5eof0I1qq', ''),
 (2, 'brechas', '$2y$10$YGyvxrOXe06JgdzW20nE3OT2KObnteubGG9qJzVW7DJbZZde67iA.',''),
 (3, 'c', '$2y$10$7LDtrBZY8sRbObQw.2ORwuJqM1LGxFxBxZ3SRv/9jQ5Rl8EEBu/C2', '');
 
