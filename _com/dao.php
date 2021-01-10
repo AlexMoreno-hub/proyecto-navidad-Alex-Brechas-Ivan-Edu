@@ -27,7 +27,7 @@ class DAO
 
         return $pdo;
     }
-/*
+
     private static function ejecutarConsulta(string $sql, array $parametros): array
     {
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
@@ -37,7 +37,7 @@ class DAO
         $rs = $select->fetchAll();
 
         return $rs;
-    }*/
+    }
 
     // Devuelve:
     //   - null: si ha habido un error
@@ -98,15 +98,7 @@ class DAO
             return FALSE;
         }
     }
-    public static function borrarCookieRecordar(array $arrayUsuario)
-    {
-        // Eliminar el código cookie de nuestra BD.
-        $idCliente = $arrayUsuario[0]["idCliente"];
-        DAO::anotarCookieEnBDD("NULL", $idCliente);
-        // Pedir borrar cookie (setcookie con tiempo time() - negativo...)
-        setcookie("identificador", "", time() - 86400);
-        setcookie("clave", "", time() - 86400);
-    }
+
 
     public static function CerrarSesion()
     {
@@ -137,23 +129,7 @@ class DAO
         $_SESSION["apellidosCliente"] = $arrayUsuario[0]["apellidosCliente"];
     }
 
-    public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
-    {
-        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
 
-        $sentencia = DAO::$pdo->prepare($sql);
-        $sentencia->execute($parametros);
-        $resultado = $sentencia->fetchAll();
-        return $resultado;
-    }
-    public static function ejecutarConsultaActualizar(string $sql, array $parametros): int
-    {
-        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
-
-        $sentencia = DAO::$pdo->prepare($sql);
-        $sentencia->execute($parametros);
-        return $sentencia->rowCount();
-    }
 
     /*NUEVO USUARIO*/
 
@@ -168,16 +144,6 @@ class DAO
         $resultados = $select->fetchAll();
         return $resultados;
     }
-    public static function obtenerCliente(string $usuarioCliente, string $emailCliente): ?array
-    {
-        $pdo = DAO::obtenerPdoConexionBD();
-        $sql = "SELECT * FROM cliente WHERE usuarioCliente='$usuarioCliente' OR emailCliente='$emailCliente'";
-        $select = $pdo->prepare($sql);
-        $select->execute([]);
-        $resultados = $select->fetchAll();
-        return $resultados;
-    }
-
 
 
 
