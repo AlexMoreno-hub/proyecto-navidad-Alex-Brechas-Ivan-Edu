@@ -4,7 +4,6 @@ require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
 $id = (int)$_REQUEST["id"];
-$conexion = obtenerPdoConexionBD();
 
 $nuevaEntrada = ($id == -1);
 

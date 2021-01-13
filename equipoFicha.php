@@ -1,36 +1,32 @@
 <?php
 
+require_once "_com/dao.php";
 require_once "_com/_varios.php";
-$conexion = obtenerPdoConexionBD();
-
 
 $id = (int)$_REQUEST["id"];
 
 $nuevaEntrada = ($id == -1);
 
 if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan datos.
+
     $equipoNombre = "<introduzca nombre>";
-} else { // Quieren VER la ficha de una persona existente, cuyos datos se cargan.
-    $sqlEquipo = "SELECT id,nombre FROM equipo WHERE id=?";
 
-    $select = $conexion->prepare($sqlEquipo);
-    $select->execute([$id]); // Se añade el parámetro a la consulta preparada.
-    $rsEquipo = $select->fetchAll();
-
+} else { // Quieren VER la ficha de una posicion existente, cuyos datos se cargan.
+    /*
+        $sql = "SELECT nombre FROM categoria WHERE id=?";
+        $select = $conexion->prepare($sql);
+        $select->execute([$id]);
+        $rs = $select->fetchAll();*/
+    $equipo= dao::EquipoObtenerPorId($id);
+    $equipoNombre = $equipo->getNombreEquipo();
     // Con esto, accedemos a los datos de la primera (y esperemos que única) fila que haya venido.
-    $equipoNombre = $rsEquipo[0]["nombre"];
+    /* $rs=dao::categoriaModificar($id);
+     $categoriaNombre = $rs[1];/*/
 }
 
 
+
 // Con lo siguiente se deja preparado un recordset con todas las categorías.
-
-
-$sql = "SELECT * FROM jugador WHERE equipoId=? ORDER BY nombre";
-
-$select = $conexion->prepare($sql);
-$select->execute([$id]);
-$rsJugadoresDelEquipo = $select->fetchAll();
-
 
 // INTERFAZ:
 // jugadorNombre , apellidos..
@@ -64,7 +60,7 @@ $rsJugadoresDelEquipo = $select->fetchAll();
 
 
     <label for='nombre'>Nombre: </label>
-    <input type='text' name='nombre' value='<?=$equipoNombre ?>' />
+    <input type='text' name='nombre' value='<?=$equipoNombre?>' />
     <br/>
 
     <br/>
@@ -82,15 +78,15 @@ $rsJugadoresDelEquipo = $select->fetchAll();
 
 
 <p>Jugadores que pertenecen actualmente :</p>
-
+<!--
 <ul>
-    <?php
+
     foreach ($rsJugadoresDelEquipo as $fila) {
         echo "<li>$fila[nombre] $fila[apellidos]</li>";
     }
-    ?>
-</ul>
 
+</ul>
+-->
 
 <?php if (!$nuevaEntrada) { ?>
     <br />

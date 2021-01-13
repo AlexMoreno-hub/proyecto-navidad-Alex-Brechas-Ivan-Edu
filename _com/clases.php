@@ -43,34 +43,34 @@ class categoria extends Dato
 
 
 }
-
-
-class Equipo extends Dato
+class equipo extends Dato
 {
     use Identificable;
 
-    private string $equipoNombre;
+    private string $nombreEquipo;
 
-
-    public function __construct(int $id, string $equipoNombre)
+    public function __construct(int $id, string $nombreEquipo)
     {
         $this->setId($id);
-        $this->setNombre($equipoNombre);
+        $this->setNombreEquipo($nombreEquipo);
     }
 
-    public function getNombre(): string
+    public function getNombreEquipo(): string
     {
-        return $this->equipoNombre;
+        return $this->nombreEquipo;
     }
 
-    public function setNombre(string $equipoNombre)
+    public function setNombreEquipo(string $nombre)
     {
-        $this->nombre = $equipoNombre;
+        $this->nombreEquipo = $nombre;
     }
-
 
 
 }
+
+
+
+
 class Jugador extends Dato
 {
     use Identificable;

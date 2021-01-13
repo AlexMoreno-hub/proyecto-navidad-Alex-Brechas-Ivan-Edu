@@ -163,6 +163,17 @@ class DAO
         else return null;
     }
 
+    public static function EquipoObtenerPorId(int $id): ?equipo
+    {
+        $rs = self::ejecutarConsultaObtener(
+            "SELECT * FROM equipo WHERE id=?",
+            [$id]
+        );
+        if ($rs) return self::equipoCrearDesdeRs($rs[0]);
+        else return null;
+    }
+
+
 
     public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
     {
@@ -177,6 +188,11 @@ class DAO
     private static function categoriaCrearDesdeRs(array $fila): categoria
     {
         return new categoria($fila["id"], $fila["nombre"]);
+    }
+
+    private static function equipoCrearDesdeRs(array $fila): equipo
+    {
+        return new Equipo($fila["id"], $fila["nombre"]);
     }
 /*
     public static function categoriaObtenerPorId(int $id): ?Categoria
@@ -224,6 +240,23 @@ class DAO
         return $datos;
     }
 
+
+    public static function equipoObtenerTodos(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT id, nombre FROM equipo ORDER BY nombre",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
 
     public static function categoriaModificar($id): array
     {

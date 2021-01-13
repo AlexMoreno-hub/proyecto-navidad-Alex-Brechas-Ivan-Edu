@@ -1,14 +1,11 @@
 <?php
 require_once "_com/_varios.php";
+require_once "_com/dao.php";
+
+$equipos = dao::equipoObtenerTodos();
 
 
-$conexion= obtenerPdoConexionBD();
 
-$sql = "SELECT id, nombre FROM equipo ORDER BY nombre";
-
-$select = $conexion->prepare($sql);
-$select->execute([]);
-$rs = $select->fetchAll();
 
 ?>
 
@@ -28,10 +25,9 @@ $rs = $select->fetchAll();
         <th>Nombre</th>
     </tr>
 
-    <?php foreach ($rs as $fila) { ?>
+    <?php foreach ($equipos as $fila) { ?>
         <tr>
-            <td><a href='equipoFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"] ?> </a></td>
-            <td><a href='equipoEliminar.php?id=<?=$fila["id"]?>'> (X)</a></td>
+            <td><a href='equipoFicha.php?id=<?=$fila->getId()?>'> <?=$fila->getNombreEquipo()?> </a></td>
         </tr>
     <?php } ?>
 
