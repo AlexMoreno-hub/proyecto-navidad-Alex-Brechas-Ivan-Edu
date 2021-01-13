@@ -1,6 +1,7 @@
 <?php
 
 require_once "_varios.php";
+require_once "clases.php";
 
 class DAO
 {
@@ -92,8 +93,6 @@ class DAO
     }
 
 
-
-
     public static function haySesionIniciada(): bool
     {
         if (isset($_SESSION["usuarioCliente"])) {
@@ -154,11 +153,32 @@ class DAO
 
     /* CATEGORÍA */
 
-    private static function categoriaCrearDesdeRs(array $fila): Categoria
+    public static function categoriaObtenerPorId(int $id): ?categoria
     {
-        return new Categoria($fila["id"], $fila["nombre"]);
+        $rs = self::ejecutarConsultaObtener(
+            "SELECT * FROM categoria WHERE id=?",
+            [$id]
+        );
+        if ($rs) return self::categoriaCrearDesdeRs($rs[0]);
+        else return null;
     }
 
+
+    public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
+    {
+        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
+
+        $sentencia = DAO::$pdo->prepare($sql);
+        $sentencia->execute($parametros);
+        $resultado = $sentencia->fetchAll();
+        return $resultado;
+    }
+
+    private static function categoriaCrearDesdeRs(array $fila): categoria
+    {
+        return new categoria($fila["id"], $fila["nombre"]);
+    }
+/*
     public static function categoriaObtenerPorId(int $id): ?Categoria
     {
         $rs = self::ejecutarConsulta(
@@ -168,7 +188,7 @@ class DAO
         if ($rs) return self::crearCategoriaDesdeRs($rs[0]);
         else return null;
     }
-
+*/
 
     public static function categoriaActualizar($id, $nombre)
     {
@@ -192,7 +212,7 @@ class DAO
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Categoria ORDER BY nombre",
+            "SELECT * FROM categoria ORDER BY nombre",
             []
         );
 
@@ -204,6 +224,31 @@ class DAO
         return $datos;
     }
 
+
+    public static function categoriaModificar($id): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT nombre FROM categoria WHERE id=?",
+            [$id]
+        );
+        $datos[0]=($rs["id"]);
+        $datos[1]=($rs["nombre"]);
+        return $datos;
+        }
+
+    public static function mostrarJugadores($id)
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsultaObtener(
+            "SELECT * FROM jugador WHERE id=? ORDER BY nombre",
+            [$id]
+        );
+        $datos= array($rs["id"],$rs["nombre"],$rs["apellido"],$rs["dorsal"],$rs["lesionado"],$rs["categoriaId"],$rs["equipoId"]);
+        return $datos;
+    }
 
     public static function categoriaEliminar(int $id): ?int
     {
@@ -240,6 +285,7 @@ class DAO
 
         return $resultado;
     }
+
 
     public static function agregarCategoria($id, $nombre)
     {

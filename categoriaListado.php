@@ -1,7 +1,10 @@
 <?php
-
+require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
+$categorias = DAO::categoriaObtenerTodas();
+
+/*
 $conexion= obtenerPdoConexionBD();
 
 $sql = "SELECT id, nombre FROM categoria ORDER BY nombre";
@@ -9,6 +12,8 @@ $sql = "SELECT id, nombre FROM categoria ORDER BY nombre";
 $select = $conexion->prepare($sql);
 $select->execute([]);
 $rs = $select->fetchAll();
+*/
+
 
 ?>
 
@@ -27,11 +32,10 @@ $rs = $select->fetchAll();
     <tr>
         <th>Nombre</th>
     </tr>
-
-    <?php foreach ($rs as $fila) { ?>
+    <?php foreach ($categorias as $fila) { ?>
         <tr>
-            <td><a href='categoriaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"] ?> </a></td>
-            <td><a href='categoriaEliminar.php?id=<?=$fila["id"]?>'> (X)</a></td>
+            <td><a href='CategoriaFicha.php?id=<?=$fila->getId()?>'> <?=$fila->getNombreCategoria()?> </a></td>
+
         </tr>
     <?php } ?>
 

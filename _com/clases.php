@@ -19,28 +19,28 @@ trait Identificable
     }
 }
 
-class Categoria extends Dato
+class categoria extends Dato
 {
     use Identificable;
 
-    private string $categoriaNombre;
+    private string $nombreCategoria;
 
-    public function __construct(int $id, string $categoriaNombre)
+    public function __construct(int $id, string $nombreCategoria)
     {
         $this->setId($id);
-        $this->setCategoriaNombre($categoriaNombre);
-
+        $this->setNombreCategoria($nombreCategoria);
     }
 
-    public function getNombre(): string
+    public function getNombreCategoria(): string
     {
-        return $this->categoriaNombre;
+        return $this->nombreCategoria;
     }
 
-    public function setCategoriaNombre(string $categoriaNombre)
+    public function setNombreCategoria(string $nombre)
     {
-        $this->nombre = $categoriaNombre;
+        $this->nombreCategoria = $nombre;
     }
+
 
 }
 

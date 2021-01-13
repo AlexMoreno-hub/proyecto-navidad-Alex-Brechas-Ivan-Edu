@@ -47,7 +47,7 @@ if(isset($_SESSION["txto"])){
         <input type="text" name="usuarioCliente" placeholder="Introduce tu usuario" required><br><br>
         <input type="password" name="contrasennaCliente" placeholder="Introduce tu contraseña" required><br><br>
         Recuerdame: <input type='checkbox' name='recordar' id='recordar'><br><br>
-        <input type="submit" name="Iniciar Session" value="Iniciar Session">
+        <input type="submit" name="Iniciar Sesion" value="Iniciar Sesion">
     </form>
 </div>
 
