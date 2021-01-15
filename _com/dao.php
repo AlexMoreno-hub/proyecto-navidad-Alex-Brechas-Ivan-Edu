@@ -185,7 +185,7 @@ class DAO
     public static function jugadorSelectEquipo(): array
     {
         $rs = self::ejecutarConsulta(
-            "SELECT id FROM equipo order by nombre",
+            "SELECT id, nombre FROM equipo order by nombre",
             []
         );
         return $rs;
