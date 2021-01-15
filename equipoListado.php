@@ -31,6 +31,7 @@ $equipos = dao::equipoObtenerTodos();
         </tr>
     <?php } ?>
 
+
 </table>
 
 <br />

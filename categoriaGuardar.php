@@ -6,8 +6,10 @@ require_once "_com/_varios.php";
 // Se recoge el parámetro "id" de la request.
 $id= (int)$_REQUEST["id"];
 $nombre = $_REQUEST["nombre"];
+
 $resultado=dao::agregarCategoria($id,$nombre);
 
+$nuevaEntrada = ($id == -1);
 
 if ($resultado){
     redireccionar("categoriaListado.php?");

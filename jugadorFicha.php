@@ -2,8 +2,7 @@
 
 
 require_once "_com/_varios.php";
-
-$conexion = obtenerPdoConexionBD();
+require_once  "_com/dao.php";
 
 
 $id = (int)$_REQUEST["id"];
@@ -16,7 +15,6 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorDorsal = "<introduzca dorsal>";
     $jugadorEquipo= "<introduzca equipo>";
     $jugadorLesioando=false;
-
     $jugadorCategoriaId = 0;
     $jugadorEquipoId = 0;
 } else { // Quieren VER la ficha de una persona existente, cuyos datos se cargan.
