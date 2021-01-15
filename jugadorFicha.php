@@ -13,7 +13,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorNombre = "<introduzca nombre>";
     $jugadorApellidos = "<introduzca apellidos>";
     $jugadorDorsal = "<introduzca dorsal>";
-   // $jugadorEquipo= "<introduzca equipo>";
+    $jugadorEquipo= "<introduzca equipo>";
     $jugadorLesioando=false;
     $jugadorCategoriaId = 0;
     $jugadorEquipoId = 0;
@@ -23,7 +23,6 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorNombre = $jugador->getNombreJugador();
     $jugadorApellidos = $jugador->getJugadorApellidos();
     $jugadorDorsal = $jugador->getJugadorDorsal();
-    //$jugadorApellidos = $jugador->getJugador();
     $jugadorLesioando = $jugador->getJugadorLesioando();
     $jugadorCategoriaId = $jugador->getJugadorCategoriaId();
     $jugadorEquipoId = $jugador->getJugadorEquipoId();

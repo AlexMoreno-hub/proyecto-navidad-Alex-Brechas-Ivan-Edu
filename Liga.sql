@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `jugador` (
 
 
 
-INSERT INTO `jugador` (`id`, `nombre`, `apellidos`, `dorsal`, `lesionado`, `categoriaId`,`equipoId`) VALUES
+INSERT INTO `jugador` (`id`, `nombre`, `apellidos`, `dorsal`,`lesionado`, `categoriaId`,`equipoId`) VALUES
 (1, 'Tibu', 'Curtois', '1', 0, 1,1),
 (2, 'Sergio', 'Ramos', '4', 1, 2,1),
 (3, 'Luca', 'Modric', '10', 0, 3,1),
@@ -96,5 +96,7 @@ INSERT INTO `cliente` (`idCliente`, `usuarioCliente`, `contrasennaCliente`, `cod
 
 ALTER TABLE `jugador`
     ADD CONSTRAINT `fk_categoriaId` FOREIGN KEY (`categoriaId`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
+
+ALTER TABLE `jugador`
+    ADD CONSTRAINT `fk_equipoId` FOREIGN KEY (`equipoId`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

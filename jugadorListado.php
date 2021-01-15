@@ -24,10 +24,13 @@ $sql = "
                     p.dorsal AS pDorsal,
                     p.lesionado AS pLesionado,
                     c.id     AS cId,
-                    c.nombre AS cNombre
+                    c.nombre AS cNombre,
+                    e.id AS eId,
+                    e.nombre AS eNombre
                 FROM
                    jugador AS p INNER JOIN categoria AS c
                    ON p.categoriaId = c.id
+                   INNER JOIN equipo AS e ON p.equipoId = e.id
                    $posibleClausulaWhere
                 ORDER BY p.nombre
             ";
@@ -85,7 +88,7 @@ $rs = $select->fetchAll();
             <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pApellidos"] ?> </a></td>
             <td><a href='categoriaFicha.php?id=<?=$fila["cId"]?>'> <?= $fila["cNombre"] ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pDorsal"] ?> </a></td>
-            <td></td>
+            <td><a href='equipoFicha.php?id=<?=$fila["eId"]?>'> <?= $fila["eNombre"] ?> </a></td>
             <td><a href='jugadorEliminar.php?id=<?=$fila["pId"]?>'> (X)                      </a></td>
         </tr>
     <?php } ?>

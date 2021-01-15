@@ -121,7 +121,6 @@ class jugador extends Dato
         $this->jugadorDorsal = $jugadorDorsal;
     }
 
-
     public function getJugadorLesioando(): bool
     {
         return $this->jugadorLesioando;
