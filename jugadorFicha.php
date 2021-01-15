@@ -13,11 +13,22 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorNombre = "<introduzca nombre>";
     $jugadorApellidos = "<introduzca apellidos>";
     $jugadorDorsal = "<introduzca dorsal>";
-    $jugadorEquipo= "<introduzca equipo>";
+   // $jugadorEquipo= "<introduzca equipo>";
     $jugadorLesioando=false;
     $jugadorCategoriaId = 0;
     $jugadorEquipoId = 0;
-} else { // Quieren VER la ficha de una persona existente, cuyos datos se cargan.
+} else {
+
+    $jugador = dao::jugadorObtenerPorId($id);
+    $jugadorNombre = $jugador->getNombreJugador();
+    $jugadorApellidos = $jugador->getJugadorApellidos();
+    $jugadorDorsal = $jugador->getJugadorDorsal();
+    //$jugadorApellidos = $jugador->getJugador();
+    $jugadorLesioando = $jugador->getJugadorLesioando();
+    $jugadorCategoriaId = $jugador->getJugadorCategoriaId();
+    $jugadorEquipoId = $jugador->getJugadorEquipoId();
+
+    /*// Quieren VER la ficha de una persona existente, cuyos datos se cargan.
     $sqlPersona = "SELECT nombre, apellidos, dorsal, lesionado , equipoId ,categoriaId FROM jugador WHERE id=?";
 
     $select = $conexion->prepare($sqlPersona);
@@ -31,10 +42,13 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorLesioando = ($rsJugador[0]["lesionado"] == 1);
     $jugadorEquipo =$rsJugador[0]["equipoId"];
     $jugadorCategoriaId = $rsJugador[0]["categoriaId"];
-    $jugadorEquipoId = $rsJugador[0]["equipoId"];
+    $jugadorEquipoId = $rsJugador[0]["equipoId"];*/
 }
 
+$rsCategorias= DAO::jugadorSelectCategoria();
+$rsEquipo= DAO::jugadorSelectEquipo();
 
+/*
 // Con lo siguiente se deja preparado un recordset con todas las categorías.
 
 $sqlCategorias = "SELECT id, nombre FROM categoria ORDER BY nombre";
@@ -55,7 +69,7 @@ $rsEquipo = $select->fetchAll();
 // jugadorNombre , apellidos..
 // jugadorDorsal
 // jugadorCategoriaId
-// rsCategorias
+// rsCategorias*/
 ?>
 
 

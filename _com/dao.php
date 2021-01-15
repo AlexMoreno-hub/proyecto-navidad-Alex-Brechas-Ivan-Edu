@@ -163,6 +163,34 @@ class DAO
         else return null;
     }
 
+    public static function jugadorObtenerPorId(int $id): ?jugador
+    {
+        $rs = self::ejecutarConsultaObtener(
+            "SELECT * FROM jugador WHERE id=?",
+            [$id]
+        );
+        if ($rs) return self::jugadorCrearDesdeRs($rs[0]);
+        else return null;
+    }
+
+    public static function jugadorSelectCategoria(): array
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT id, nombre FROM categoria order by nombre",
+            []
+        );
+        return $rs;
+    }
+
+    public static function jugadorSelectEquipo(): array
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT id FROM equipo order by nombre",
+            []
+        );
+        return $rs;
+    }
+
     public static function EquipoObtenerPorId(int $id): ?equipo
     {
         $rs = self::ejecutarConsultaObtener(
@@ -190,6 +218,10 @@ class DAO
         return new categoria($fila["id"], $fila["nombre"]);
     }
 
+    private static function jugadorCrearDesdeRs(array $fila): jugador
+    {
+        return new jugador($fila["id"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
+    }
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
         return new Equipo($fila["id"], $fila["nombre"]);

@@ -69,27 +69,103 @@ class equipo extends Dato
 }
 
 
-
-
-class Jugador extends Dato
+class jugador extends Dato
 {
     use Identificable;
 
-    private string $jugadorNombre;
+    private string $nombreJugador;
     private string $jugadorApellidos;
     private int $jugadorDorsal;
-    private string $jugadorEquipo;
     private bool $jugadorLesioando;
     private int $jugadorCategoriaId;
     private int $jugadorEquipoId;
 
-    public function __construct(int $idJugador, string $jugadorNombre, string $jugadorApellidos, int $jugadorDorsal, string $jugadorEquipo, bool $jugadorLesioando, int $jugadorCategoriaId, int $jugadorEquipoId)
+    public function __construct(int $id, string $nombreJugador, string  $jugadorApellidos, int $jugadorDorsal, bool $jugadorLesioando , int $jugadorCategoriaId , int $jugadorEquipoId)
+    {
+        $this->setId($id);
+        $this->setNombreJugador($nombreJugador);
+        $this->setJugadorApellidos($jugadorApellidos);
+        $this->setJugadorDorsal($jugadorDorsal);
+        $this->setJugadorLesioando($jugadorLesioando);
+        $this->setJugadorCategoriaId($jugadorCategoriaId);
+        $this->setJugadorEquipoId($jugadorEquipoId);
+    }
+
+    public function getNombreJugador(): string
+    {
+        return $this->nombreJugador;
+    }
+
+    public function setNombreJugador(string $nombre)
+    {
+        $this->nombreJugador = $nombre;
+    }
+
+    public function getJugadorApellidos(): string
+    {
+        return $this->jugadorApellidos;
+    }
+
+    public function setJugadorApellidos(string $jugadorApellidos)
+    {
+        $this->jugadorApellidos = $jugadorApellidos;
+    }
+
+    public function getJugadorDorsal(): int
+    {
+        return $this->jugadorDorsal;
+    }
+
+    public function setJugadorDorsal(int $jugadorDorsal)
+    {
+        $this->jugadorDorsal = $jugadorDorsal;
+    }
+
+
+    public function getJugadorLesioando(): bool
+    {
+        return $this->jugadorLesioando;
+    }
+
+    public function setJugadorLesioando(bool $jugadorLesioando)
+    {
+        $this->jugadorLesioando = $jugadorLesioando;
+    }
+
+    public function getJugadorCategoriaId(): int
+    {
+        return $this->jugadorCategoriaId;
+    }
+
+    public function setJugadorCategoriaId(int $jugadorCategoriaId)
+    {
+        $this->jugadorCategoriaId = $jugadorCategoriaId;
+    }
+
+    public function getJugadorEquipoId(): int
+    {
+        return $this->jugadorEquipoId;
+    }
+
+    public function setJugadorEquipoId(int $jugadorEquipoId)
+    {
+        $this->jugadorEquipoId = $jugadorEquipoId;
+    }
+
+}
+
+/*class jugador extends Dato
+{
+    use Identificable;
+
+
+
+    public function __construct(int $idJugador, string $jugadorNombre, string $jugadorApellidos, int $jugadorDorsal, bool $jugadorLesioando, int $jugadorCategoriaId, int $jugadorEquipoId)
     {
         $this->setId($idJugador);
         $this->setJugadorNombre($jugadorNombre);
         $this->setJugadorApellidos($jugadorApellidos);
         $this->setJugadorDorsal($jugadorDorsal);
-        $this->setJugadorEquipo($jugadorEquipo);
         $this->setJugadorLesioando($jugadorLesioando);
         $this->setJugadorCategoriaId($jugadorCategoriaId);
         $this->setJugadorEquipoId($jugadorEquipoId);
@@ -125,15 +201,6 @@ class Jugador extends Dato
         $this->jugadorDorsal = $jugadorDorsal;
     }
 
-    public function getJugadorEquipo(): string
-    {
-        return $this->jugadorEquipo;
-    }
-
-    public function setJugadorEquipo(string $jugadorEquipo)
-    {
-        $this->jugadorEquipo = $jugadorEquipo;
-    }
 
     public function getJugadorLesioando(): bool
     {
@@ -164,7 +231,7 @@ class Jugador extends Dato
     {
         $this->jugadorEquipoId = $jugadorEquipoId;
     }
-}
+}*/
 
 class Cliente extends Dato
 {
