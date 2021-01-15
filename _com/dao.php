@@ -153,6 +153,27 @@ class DAO
 
     /* CATEGORÍA */
 
+    private static function categoriaCrearDesdeRs(array $fila): categoria
+    {
+        return new categoria($fila["id"], $fila["nombre"]);
+    }
+
+
+    public static function categoriaCrear($nombre): bool
+    {
+        $consulta = self::ejecutarActualizacion("INSERT INTO categoria (nombre) VALUES (?);", [$nombre]);
+        return $consulta;
+    }
+
+
+    public static function categoriaModificar($nombre, $id): bool
+    {
+        $consulta = self::ejecutarActualizacion("UPDATE categoria SET nombre=? WHERE id=?;", [$id, $nombre]);
+        return $consulta;
+    }
+
+
+
     public static function categoriaObtenerPorId(int $id): ?categoria
     {
         $rs = self::ejecutarConsultaObtener(
@@ -162,6 +183,37 @@ class DAO
         if ($rs) return self::categoriaCrearDesdeRs($rs[0]);
         else return null;
     }
+
+
+    public static function categoriaObtenerTodas(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM categoria ORDER BY nombre",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $categoria = self::categoriaCrearDesdeRs($fila);
+            array_push($datos, $categoria);
+        }
+
+        return $datos;
+    }
+
+
+    public static function categoriaEliminar(int $id): ?int
+    {
+        $resultado = self::ejecutarActualizacion(
+            "DELETE FROM Categoria WHERE id=?",
+            [$id]
+        );
+
+        return $resultado;
+    }
+
+    /* JUGADOR */
 
     public static function jugadorObtenerPorId(int $id): ?jugador
     {
@@ -191,6 +243,37 @@ class DAO
         return $rs;
     }
 
+
+    public static function jugadorEliminar(int $id): ?int
+    {
+        $resultado = self::ejecutarActualizacion(
+            "DELETE FROM Jugador WHERE id=?",
+            [$id]
+        );
+
+        return $resultado;
+    }
+
+
+    /* EQUIPO */
+
+    public static function equipoCrear($nombre): bool
+    {
+        $consulta = self::ejecutarActualizacion("INSERT INTO equipo (nombre) VALUES (?);", [$nombre]);
+        return $consulta;
+    }
+
+    public static function equipoModificar($nombre, $id): bool
+    {
+        $consulta = self::ejecutarActualizacion("UPDATE equipo SET nombre=? WHERE id=?;", [$id, $nombre]);
+        return $consulta;
+    }
+
+    private static function equipoCrearDesdeRs(array $fila): equipo
+    {
+        return new Equipo($fila["id"], $fila["nombre"]);
+    }
+
     public static function EquipoObtenerPorId(int $id): ?equipo
     {
         $rs = self::ejecutarConsultaObtener(
@@ -199,77 +282,6 @@ class DAO
         );
         if ($rs) return self::equipoCrearDesdeRs($rs[0]);
         else return null;
-    }
-
-
-
-    public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
-    {
-        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
-
-        $sentencia = DAO::$pdo->prepare($sql);
-        $sentencia->execute($parametros);
-        $resultado = $sentencia->fetchAll();
-        return $resultado;
-    }
-
-    private static function categoriaCrearDesdeRs(array $fila): categoria
-    {
-        return new categoria($fila["id"], $fila["nombre"]);
-    }
-
-    private static function jugadorCrearDesdeRs(array $fila): jugador
-    {
-        return new jugador($fila["id"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
-    }
-    private static function equipoCrearDesdeRs(array $fila): equipo
-    {
-        return new Equipo($fila["id"], $fila["nombre"]);
-    }
-/*
-    public static function categoriaObtenerPorId(int $id): ?Categoria
-    {
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM Categoria WHERE id=?",
-            [$id]
-        );
-        if ($rs) return self::crearCategoriaDesdeRs($rs[0]);
-        else return null;
-    }
-*/
-
-    public static function categoriaActualizar($id, $nombre)
-    {
-        self::ejecutarActualizacion(
-            "UPDATE Categoria SET nombre=? WHERE id=?",
-            [$nombre, $id]
-        );
-    }
-
-    public static function categoriaCrear(string $nombre)
-    {
-        $resultado = self::ejecutarActualizacion(
-            "INSERT INTO Categoria (nombre) VALUES (?)",
-            [$nombre]
-        );
-        return $resultado;
-    }
-
-    public static function categoriaObtenerTodas(): array
-    {
-        $datos = [];
-
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM categoria ORDER BY nombre",
-            []
-        );
-
-        foreach ($rs as $fila) {
-            $categoria = self::categoriaCrearDesdeRs($fila);
-            array_push($datos, $categoria);
-        }
-
-        return $datos;
     }
 
 
@@ -290,18 +302,62 @@ class DAO
         return $datos;
     }
 
-    public static function categoriaModificar($id): array
-    {
-        $datos = [];
 
-        $rs = self::ejecutarConsulta(
-            "SELECT nombre FROM categoria WHERE id=?",
+    public static function equipoEliminar(int $id): ?int
+    {
+        $resultado = self::ejecutarActualizacion(
+            "DELETE FROM equipo WHERE id=?",
             [$id]
         );
-        $datos[0]=($rs["id"]);
-        $datos[1]=($rs["nombre"]);
-        return $datos;
-        }
+
+        return $resultado;
+    }
+
+
+
+    public static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
+    {
+        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
+
+        $sentencia = DAO::$pdo->prepare($sql);
+        $sentencia->execute($parametros);
+        $resultado = $sentencia->fetchAll();
+        return $resultado;
+    }
+
+
+
+
+
+    /*public static function categoriaActualizar($id, $nombre)
+    {
+        self::ejecutarActualizacion(
+            "UPDATE Categoria SET nombre=? WHERE id=?",
+            [$nombre, $id]
+        );
+    }*/
+
+
+
+
+    /////JUGADOR////
+
+
+    public static function agregarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
+    {
+        self::ejecutarActualizacion("INSERT INTO jugador (nombre, apellidos, dorsal,lesionado,categoriaId,equipoId)
+            VALUES (?, ?, ?, ?, ?, ?);",
+            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
+    }
+
+
+    public static function modificarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
+    {
+        self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=?, lesionado=?, categoriaId=? , equipoId=? WHERE id=?)
+            VALUES (?, ?, ?, ?, ?, ?);",
+            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
+    }
+
 
     public static function mostrarJugadores($id)
     {
@@ -315,69 +371,11 @@ class DAO
         return $datos;
     }
 
-    public static function categoriaEliminar(int $id): ?int
-    {
-        $resultado = self::ejecutarActualizacion(
-            "DELETE FROM Categoria WHERE id=?",
-            [$id]
-        );
 
-        return $resultado;
+    private static function jugadorCrearDesdeRs(array $fila): jugador
+    {
+        return new jugador($fila["id"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
     }
 
-
-
-
-    ///////JUGADOR/////////
-    public static function jugadorEliminar(int $id): ?int
-    {
-        $resultado = self::ejecutarActualizacion(
-            "DELETE FROM Jugador WHERE id=?",
-            [$id]
-        );
-
-        return $resultado;
-    }
-
-    /////EQUIPO//////
-
-    public static function equipoEliminar(int $id): ?int
-    {
-        $resultado = self::ejecutarActualizacion(
-            "DELETE FROM equipo WHERE id=?",
-            [$id]
-        );
-
-        return $resultado;
-    }
-
-
-    public static function agregarCategoria($id, $nombre)
-    {
-        self::ejecutarActualizacion("INSERT INTO categoria (id, nombre)
-            VALUES (?, ?);",
-            [$id,$nombre]);
-    }
-
-    public static function agregarEquipo($id, $nombre)
-    {
-        self::ejecutarActualizacion("INSERT INTO equipo (id, nombre)
-            VALUES (?, ?);",
-            [$id,$nombre]);
-    }
-
-    public static function agregarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
-    {
-        self::ejecutarActualizacion("INSERT INTO jugador (nombre, apellidos, dorsal,lesionado,categoriaId,equipoId)
-            VALUES (?, ?, ?, ?, ?, ?);",
-            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
-    }
-
-    public static function modificarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
-    {
-        self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=?, lesionado=?, categoriaId=? , equipoId=? WHERE id=?)
-            VALUES (?, ?, ?, ?, ?, ?);",
-            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
-    }
 
 }

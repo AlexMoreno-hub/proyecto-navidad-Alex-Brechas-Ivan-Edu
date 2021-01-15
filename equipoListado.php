@@ -45,7 +45,7 @@ $equipos = dao::equipoObtenerTodos();
 <a href='jugadorListado.php'>Gestionar listado de Jugadores</a>
 <br />
 <br />
-<a href="categoriaListado.php">Gestionar listado de posciones</a>
+<a href="categoriaListado.php">Gestionar listado de Posiciones</a>
 
 </body>
 

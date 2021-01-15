@@ -82,7 +82,7 @@ $rsJugadoresDeLaCategoria = $select->fetchAll();
 
 <?php if (!$nuevaEntrada) { ?>
     <br />
-    <a href='categoriaEliminar.php?id=<?=$id?>'>Eliminar Poscición</a>
+    <a href='categoriaEliminar.php?id=<?=$id?>'>Eliminar Posición</a>
 <?php } ?>
 
 <br />

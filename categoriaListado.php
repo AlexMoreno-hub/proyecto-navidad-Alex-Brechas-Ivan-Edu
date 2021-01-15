@@ -36,6 +36,7 @@ $rs = $select->fetchAll();
         <tr>
             <td><a href='categoriaFicha.php?id=<?=$fila->getId()?>'> <?=$fila->getNombreCategoria()?> </a></td>
             <td><a href='categoriaEliminar.php?id=<?=$fila->getId()?>'> (X)                            </a></td>
+
         </tr>
     <?php } ?>
 

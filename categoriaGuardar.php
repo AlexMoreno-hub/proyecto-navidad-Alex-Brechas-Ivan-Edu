@@ -7,15 +7,19 @@ require_once "_com/_varios.php";
 $id= (int)$_REQUEST["id"];
 $nombre = $_REQUEST["nombre"];
 
-$resultado=dao::agregarCategoria($id,$nombre);
+//$resultado=dao::agregarCategoria($id,$nombre);
 
 $nuevaEntrada = ($id == -1);
+$resultado=false;
+$datosNoModificados=false;
 
-if ($resultado){
-    redireccionar("categoriaListado.php?");
+if ($nuevaEntrada){
+    $resultado=dao::categoriaCrear($nombre);
+    redireccionar("categoriaListado.php");
 }
 else {
-    redireccionar("categoriaListado.php?");
+    $datosNoModificados = DAO::categoriaModificar($id,$nombre);
+    redireccionar("categoriaListado.php");
 }
 /*
 $conexion = obtenerPdoConexionBD();

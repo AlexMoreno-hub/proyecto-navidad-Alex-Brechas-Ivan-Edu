@@ -8,12 +8,19 @@ $id= (int)$_REQUEST["id"];
 $nombre = $_REQUEST["nombre"];
 
 
+$nuevaEntrada = ($id == -1);
+$resultado=false;
+$datosNoModificados=false;
 
-$resultado = DAO::agregarEquipo($id,$nombre);
-if($resultado)
-    redireccionar("EquipoListado.php?eliminacionCorrecta");
-else
-    redireccionar("EquipoListado.php?eliminacionErronea");
+if ($nuevaEntrada){
+    $resultado=dao::equipoCrear($nombre);
+    redireccionar("equipoListado.php");
+}
+else {
+    $datosNoModificados = DAO::equipoModificar($id,$nombre);
+    redireccionar("equipoListado.php");
+}
+
 
 
 

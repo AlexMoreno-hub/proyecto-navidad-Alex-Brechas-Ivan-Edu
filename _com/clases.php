@@ -43,6 +43,7 @@ class categoria extends Dato
 
 
 }
+
 class equipo extends Dato
 {
     use Identificable;
