@@ -28,6 +28,7 @@ $equipos = dao::equipoObtenerTodos();
     <?php foreach ($equipos as $fila) { ?>
         <tr>
             <td><a href='equipoFicha.php?id=<?=$fila->getId()?>'> <?=$fila->getNombreEquipo()?> </a></td>
+            <td><a href='equipoEliminar.php?id=<?=$fila->getId()?>'> (X)                            </a></td>
         </tr>
     <?php } ?>
 
