@@ -81,9 +81,9 @@ class jugador extends Dato
     private int $jugadorCategoriaId;
     private int $jugadorEquipoId;
 
-    public function __construct(int $id, string $nombreJugador, string  $jugadorApellidos, int $jugadorDorsal, bool $jugadorLesioando , int $jugadorCategoriaId , int $jugadorEquipoId)
+    public function __construct(int $jugadorId, string $nombreJugador, string  $jugadorApellidos, int $jugadorDorsal, bool $jugadorLesioando , int $jugadorCategoriaId , int $jugadorEquipoId)
     {
-        $this->setId($id);
+        $this->setId($jugadorId);
         $this->setNombreJugador($nombreJugador);
         $this->setJugadorApellidos($jugadorApellidos);
         $this->setJugadorDorsal($jugadorDorsal);

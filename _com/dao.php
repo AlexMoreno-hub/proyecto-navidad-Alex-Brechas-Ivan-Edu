@@ -54,6 +54,8 @@ class DAO
         else return $actualizacion->rowCount();
     }
 
+
+
     /*---------- Funciones generales ----------*/
     public static function anotarCookieEnBDD($codigoCookie, $idUsuario): bool
     {
@@ -215,11 +217,11 @@ class DAO
 
     /* JUGADOR */
 
-    public static function jugadorObtenerPorId(int $id): ?jugador
+    public static function jugadorObtenerPorId(int $jugadorId): ?jugador
     {
         $rs = self::ejecutarConsultaObtener(
-            "SELECT * FROM jugador WHERE id=?",
-            [$id]
+            "SELECT * FROM jugador WHERE jugadorId=?",
+            [$jugadorId]
         );
         if ($rs) return self::jugadorCrearDesdeRs1($rs[0]);
         else return null;
@@ -280,13 +282,12 @@ class DAO
     }
 
 
-    public static function jugadorModificar($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId,$id): bool
+    public static function jugadorModificar($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId,$jugadorId): bool
     {
-        $consulta = self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=? , lesionado=?,categoriaId=?,equipoId=? WHERE id=?;",
-            [$id,$nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId]);
+        $consulta = self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=? , lesionado=?,categoriaId=?,equipoId=? WHERE jugadorId=?;",
+            [$nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId,$jugadorId]);
         return $consulta;
     }
-
 
 
     public static function jugadorCrearDesdeRs(array $fila): jugador
@@ -347,7 +348,7 @@ class DAO
 
         $rs = self::ejecutarConsulta(
             "SELECT
-                    p.id     AS pId,
+                    p.jugadorId     AS pId,
                     p.nombre AS pNombre,
                     p.apellidos AS pApellidos,
                     p.dorsal AS pDorsal,
@@ -459,7 +460,7 @@ class DAO
 
     private static function jugadorCrearDesdeRs1(array $fila): jugador
     {
-        return new jugador($fila["id"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
+        return new jugador($fila["jugadorId"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
     }
 
 

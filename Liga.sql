@@ -51,20 +51,20 @@ INSERT INTO `equipo` (`id`, `nombre`) VALUES
 
 DROP TABLE IF EXISTS `jugador`;
 CREATE TABLE IF NOT EXISTS `jugador` (
-                                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                                         `jugadorId` int(11) NOT NULL AUTO_INCREMENT,
                                          `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
                                          `apellidos` varchar(80) DEFAULT NULL,
                                          `dorsal` varchar(2) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
                                          `lesionado` tinyint(1) NOT NULL DEFAULT 0,
                                          `categoriaId` int(11) NOT NULL,
                                          `equipoId` int(11) NOT NULL,
-                                         PRIMARY KEY (`id`),
+                                         PRIMARY KEY (`jugadorId`),
                                          KEY `fk_categoriaIdIdx` (`categoriaId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 
 
-INSERT INTO `jugador` (`id`, `nombre`, `apellidos`, `dorsal`,`lesionado`, `categoriaId`,`equipoId`) VALUES
+INSERT INTO `jugador` (`jugadorId`, `nombre`, `apellidos`, `dorsal`,`lesionado`, `categoriaId`,`equipoId`) VALUES
 (1, 'Tibu', 'Curtois', '1', 0, 1,1),
 (2, 'Sergio', 'Ramos', '4', 1, 2,1),
 (3, 'Luca', 'Modric', '10', 0, 3,1),
@@ -95,8 +95,6 @@ INSERT INTO `cliente` (`idCliente`, `usuarioCliente`, `contrasennaCliente`, `cod
 
 
 ALTER TABLE `jugador`
-    ADD CONSTRAINT `fk_categoriaId` FOREIGN KEY (`categoriaId`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `jugador`
+    ADD CONSTRAINT `fk_categoriaId` FOREIGN KEY (`categoriaId`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_equipoId` FOREIGN KEY (`equipoId`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
