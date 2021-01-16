@@ -1,6 +1,7 @@
 <?php
 require_once "_com/_varios.php";
-
+require_once "_com/dao.php";
+/*
 $conexion = obtenerPdoConexionBD();
 
 $mostrarLesionado = isset($_REQUEST["soloLesionado"]);
@@ -14,8 +15,10 @@ if (isset($_REQUEST["todos"])) {
 }
 
 $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
+*/
 
-
+$jugadores = dao::jugadorObtenerTodos();
+/*
 $sql = "
                SELECT
                     p.id     AS pId,
@@ -41,7 +44,7 @@ $rs = $select->fetchAll();
 
 
 // INTERFAZ:
-// $rs
+// $rs*/
 ?>
 
 
@@ -71,25 +74,25 @@ $rs = $select->fetchAll();
     </tr>
 
     <?php
-    foreach ($rs as $fila) { ?>
+    foreach ($jugadores as $fila) { ?>
 
         <tr>
-            <td>
-                <?php
-                echo "<a href='jugadorFicha.php?id=$fila[pId]'>";
-                echo "$fila[pNombre]";
-                echo "</a>";
+           <!-- <td>
+                <?php/*
+           echo "<a href='jugadorFicha.php?id=$fila->getId()'>";
+           echo "$fila->getNombreJugador()";
+           echo "</a>";
 
-                $urlImagen = $fila["pLesionado"] ? "img/cruz-roja.png" : "img/2.png";
-                echo " <a href='jugadorLesionado.php.php?id=$fila[pId]'><img src='$urlImagen' width='16' height='16'></a> ";
-                ?>
-            </td>
-
-            <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pApellidos"] ?> </a></td>
-            <td><a href='categoriaFicha.php?id=<?=$fila["cId"]?>'> <?= $fila["cNombre"] ?> </a></td>
-            <td><a href='jugadorFicha.php?id=<?=$fila["pId"]?>'> <?= $fila["pDorsal"] ?> </a></td>
-            <td><a href='equipoFicha.php?id=<?=$fila["eId"]?>'> <?= $fila["eNombre"] ?> </a></td>
-            <td><a href='jugadorEliminar.php?id=<?=$fila["pId"]?>'> (X)                      </a></td>
+           $urlImagen = $fila["pLesionado"] ? "img/cruz-roja.png" : "img/2.png";
+           echo " <a href='jugadorLesionado.php.php?id=$fila[pId]'><img src='$urlImagen' width='16' height='16'></a> ";
+           */?>
+            </td>-->
+            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombreJugador() ?> </a></td>
+            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorApellidos() ?> </a></td>
+            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorCategoriaId() ?> </a></td>
+            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorDorsal() ?> </a></td>
+            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorEquipoId() ?> </a></td>
+            <td><a href='jugadorEliminar.php?id=<?=$fila->getId()?>'> (X)                      </a></td>
         </tr>
     <?php } ?>
 

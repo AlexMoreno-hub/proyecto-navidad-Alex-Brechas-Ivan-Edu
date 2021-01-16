@@ -269,6 +269,13 @@ class DAO
         return $consulta;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static function jugadorCrearDesdeRs(array $fila): jugador
+    {
+        return new jugador($fila["pId"], $fila["pNombre"],$fila["pApellidos"],$fila["pDorsal"],$fila["pLesionado"],$fila["cId"],$fila["eId"]);
+    }
+>>>>>>> Stashed changes
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
         return new Equipo($fila["id"], $fila["nombre"]);
@@ -282,6 +289,69 @@ class DAO
         );
         if ($rs) return self::equipoCrearDesdeRs($rs[0]);
         else return null;
+    }
+
+    /*
+    public static function jugadorObtenerTodos(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT
+                    p.id     AS pId,
+                    p.nombre AS pNombre,
+                    p.apellidos AS pApellidos,
+                    p.dorsal AS pDorsal,
+                    p.lesionado AS pLesionado,
+                    c.id     AS cId,
+                    c.nombre AS cNombre,
+                    e.id AS eId,
+                    e.nombre AS eNombre
+                FROM
+                   jugador AS p INNER JOIN categoria AS c
+                   ON p.categoriaId = c.id
+                   INNER JOIN equipo AS e ON p.equipoId = e.id
+                ORDER BY p.nombre",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $jugador = self::jugadorCrearDesdeRs($fila);
+            array_push($datos, $jugador);
+        }
+
+        return $datos;
+    }*/
+
+    public static function jugadorObtenerTodos(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT
+                    p.id     AS pId,
+                    p.nombre AS pNombre,
+                    p.apellidos AS pApellidos,
+                    p.dorsal AS pDorsal,
+                    p.lesionado AS pLesionado,
+                    c.id     AS cId,
+                    c.nombre AS cNombre,
+                    e.id AS eId,
+                    e.nombre AS eNombre
+                FROM
+                   jugador AS p INNER JOIN categoria AS c
+                   ON p.categoriaId = c.id
+                   INNER JOIN equipo AS e ON p.equipoId = e.id
+                ORDER BY p.nombre",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $jugador = self::jugadorCrearDesdeRs($fila);
+            array_push($datos, $jugador);
+        }
+
+        return $datos;
     }
 
 
