@@ -18,11 +18,11 @@ $datosNoModificados=false;
 
 if ($nuevaEntrada){
     $resultado=dao::jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
-    redireccionar("equipoListado.php");
+    redireccionar("jugadorListado.php");
 }
 else {
-    $datosNoModificados = DAO::jugadorModificar($id,$nombre);
-    redireccionar("equipoListado.php");
+    $datosNoModificados = DAO::jugadorModificar($id,$nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
+    redireccionar("jugadorListado.php");
     }
 /*
 $resultado = DAO::agregarJugador($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoNombre);
