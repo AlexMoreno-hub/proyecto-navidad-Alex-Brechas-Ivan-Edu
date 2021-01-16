@@ -12,8 +12,7 @@ $nuevaEntrada = ($id == -1);
 if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan datos.
     $jugadorNombre = "<introduzca nombre>";
     $jugadorApellidos = "<introduzca apellidos>";
-    $jugadorDorsal = "<introduzca dorsal>";
-    $jugadorEquipo= "<introduzca equipo>";
+    $jugadorDorsal = "1";
     $jugadorLesioando=false;
     $jugadorCategoriaId = 0;
     $jugadorEquipoId = 0;

@@ -263,6 +263,15 @@ class DAO
         return $consulta;
     }
 
+    public static function jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId): bool
+    {
+        $consulta = self::ejecutarActualizacion("INSERT INTO jugador (nombre,apellidos,dorsal,lesionado,categoriaId,equipoId) VALUES (?);",
+            [$nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId]);
+        return $consulta;
+    }
+
+
+
     public static function equipoModificar($nombre, $id): bool
     {
         $consulta = self::ejecutarActualizacion("UPDATE equipo SET nombre=? WHERE id=?;", [$id, $nombre]);

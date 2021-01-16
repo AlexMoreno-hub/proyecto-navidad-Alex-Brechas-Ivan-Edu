@@ -3,21 +3,34 @@
 require_once "_com/dao.php";
 require_once "_com/_varios.php";
 
+$id= (int)$_REQUEST["id"];
 // Se recoge el parámetro "id" de la request.
 $nombre = $_REQUEST["nombre"];
 $apellidos = $_REQUEST["apellidos"];
 $dorsal = $_REQUEST["dorsal"];
 $categoriaId = (int)$_REQUEST["categoriaId"];
-$equipoNombre=(int)$_REQUEST["equipoNombre"];
+$equipoId=(int)$_REQUEST["equipoId"];
 $lesionado = isset($_REQUEST["lesionado"]);
 
+$nuevaEntrada = ($id == -1);
+$resultado=false;
+$datosNoModificados=false;
 
+if ($nuevaEntrada){
+    $resultado=dao::jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
+    redireccionar("equipoListado.php");
+}
+else {
+    $datosNoModificados = DAO::jugadorModificar($id,$nombre);
+    redireccionar("equipoListado.php");
+    }
+/*
 $resultado = DAO::agregarJugador($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoNombre);
 if($resultado)
     redireccionar("jugadorListado.php?eliminacionCorrecta");
 else
     redireccionar("jugadorListado.php?eliminacionErronea");
-
+*/
 
 /*
 require_once "_com/_varios.php";
