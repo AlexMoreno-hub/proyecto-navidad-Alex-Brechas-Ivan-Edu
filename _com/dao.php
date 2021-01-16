@@ -221,7 +221,7 @@ class DAO
             "SELECT * FROM jugador WHERE id=?",
             [$id]
         );
-        if ($rs) return self::jugadorCrearDesdeRs($rs[0]);
+        if ($rs) return self::jugadorCrearDesdeRs1($rs[0]);
         else return null;
     }
 
@@ -269,13 +269,12 @@ class DAO
         return $consulta;
     }
 
-<<<<<<< Updated upstream
-=======
+
     public static function jugadorCrearDesdeRs(array $fila): jugador
     {
         return new jugador($fila["pId"], $fila["pNombre"],$fila["pApellidos"],$fila["pDorsal"],$fila["pLesionado"],$fila["cId"],$fila["eId"]);
     }
->>>>>>> Stashed changes
+
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
         return new Equipo($fila["id"], $fila["nombre"]);
@@ -407,9 +406,6 @@ class DAO
         );
     }*/
 
-
-
-
     /////JUGADOR////
 
 
@@ -442,7 +438,7 @@ class DAO
     }
 
 
-    private static function jugadorCrearDesdeRs(array $fila): jugador
+    private static function jugadorCrearDesdeRs1(array $fila): jugador
     {
         return new jugador($fila["id"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
     }
