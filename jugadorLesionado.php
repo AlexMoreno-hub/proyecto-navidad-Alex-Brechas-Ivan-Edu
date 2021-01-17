@@ -1,5 +1,5 @@
 <?php
-
+//
 require_once "_com/dao.php";
 
 $conexion = obtenerPdoConexionBD();

@@ -1,6 +1,6 @@
 <?php
 /*Comprobar si usuario introducido ya existe*/
-
+//
 require_once "_com/dao.php";
 
 

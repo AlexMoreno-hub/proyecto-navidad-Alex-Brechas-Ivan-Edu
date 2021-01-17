@@ -4,7 +4,7 @@ require_once "_com/dao.php";
 
 $equipos = dao::equipoObtenerTodos();
 
-
+//
 ?>
 
 <html>
