@@ -2,6 +2,7 @@
 //formulario para la creación del usuario en caso de que no exista
 require_once "_com/_varios.php";
 require_once "_com/dao.php";
+//
 ?>
 
 <html>
