@@ -395,20 +395,20 @@ class DAO
         setcookie("codigoCookie", "", time() - 3600); //borrar cookie en ese tiempo
     }
 /*creamos */
-    public function establecerSesionCookie(array $arrayUsuario)
+
+    public static function establecerSesionCookie()
     {
-        // Creamos un código cookie muy complejo (no necesariamente único).
+        $arrayUsuario = DAO::usuarioObtener($_REQUEST["nombreUsuario"], $_REQUEST["contrasenna"]);
         $codigoCookie = generarCadenaAleatoria(32);
 
-        self::ejecutarActualizacion(
-            "UPDATE Usuario SET codigoCookie=? WHERE nombreUsuario=?",
-            [$codigoCookie,$arrayUsuario["nombreUsuario"]]
+        self::ejecutarConsulta(
+            "UPDATE usuario SET codigoCookie=? WHERE nombreUsuario=?",
+            [$codigoCookie, $arrayUsuario->getnombreUsuario()]
         );
 
-        // Enviamos al usuario, en forma de cookies, el usuario(nombre) y el codigoCookie:
-        setcookie("nombreUsuario", $arrayUsuario["nombreUsuario"], time() + 600);
-        setcookie("codigoCookie", $codigoCookie, time() + 600);
 
+        $arrayCookies["nombreUsuario"] = setcookie("nombreUsuario", $arrayUsuario->getnombreUsuario(), time() + 60 * 60);
+        $arrayCookies["codigoCookie"] = setcookie("codigoCookie", $codigoCookie, time() + 60 * 60);
     }
 
 
