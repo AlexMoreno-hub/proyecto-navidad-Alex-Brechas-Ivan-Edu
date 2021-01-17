@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+//no repetido, necesario para jugador lesionado
 function obtenerPdoConexionBD(): PDO
 {
     $servidor = "localhost";
@@ -23,7 +24,6 @@ function obtenerPdoConexionBD(): PDO
     return $conexion;
 }
 
-// (Esta función no se utiliza en este proyecto pero se deja por si se optimizase el flujo de navegación.)
 // Esta función redirige a otra página y deja de ejecutar el PHP que la llamó:
 function redireccionar(string $url)
 {

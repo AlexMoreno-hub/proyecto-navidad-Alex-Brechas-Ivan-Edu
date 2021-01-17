@@ -9,11 +9,14 @@
 <h3>Aqui podrás crear el equipo y los jugadores con las respectivas posiciones que quieras.</h3>
 
 <ul>
-    <li>Inicio</li>
+    <li>Listado</li>
         <a href="categoriaListado.php">Posiciones</a>
         <a href="equipoListado.php">Equipos</a>
         <a href="jugadorLesionado.php">Jugadores</a>
 </ul>
+
+
+<a href="sesionCerrar.php">Cerrar la sesión</a>
 
 </body>
 </html>

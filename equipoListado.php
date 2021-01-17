@@ -5,8 +5,6 @@ require_once "_com/dao.php";
 $equipos = dao::equipoObtenerTodos();
 
 
-
-
 ?>
 
 <html>
@@ -46,6 +44,11 @@ $equipos = dao::equipoObtenerTodos();
 <br />
 <br />
 <a href="categoriaListado.php">Gestionar listado de Posiciones</a>
+
+<br>
+<br>
+<a href="paginaPrincipal.php">Volver a la página principal</a>
+
 
 </body>
 

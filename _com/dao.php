@@ -1,8 +1,6 @@
 <?php
-
 require_once "_varios.php";
 require_once "clases.php";
-
 
 class DAO
 {
@@ -56,27 +54,7 @@ class DAO
     }
 
 
-
-
-
-    /*NUEVO USUARIO*/
-
-
-    /*--------------------------- FUNCIONES PARA CLIENTE ------------------------------*/
-    public static function obtenerClienteConUsuario(string $usuarioCliente): ?array
-    {
-        $pdo = DAO::obtenerPdoConexionBD();
-        $sql = "SELECT * FROM cliente WHERE usuarioCliente='$usuarioCliente' ";
-        $select = $pdo->prepare($sql);
-        $select->execute([]);
-        $resultados = $select->fetchAll();
-        return $resultados;
-    }
-
-
-
-
-    /* CATEGORÍA */
+    /*FUNCIONES PARA CATEGORÍA */
 
     private static function categoriaCrearDesdeRs(array $fila): categoria
     {
@@ -138,7 +116,8 @@ class DAO
         return $resultado;
     }
 
-    /* JUGADOR */
+
+    /*FUNCIONES PARA JUGADOR */
 
     public static function jugadorObtenerPorId(int $jugadorId): ?jugador
     {
@@ -179,15 +158,6 @@ class DAO
         return $resultado;
     }
 
-
-    /* EQUIPO */
-
-    public static function equipoCrear($nombre): bool
-    {
-        $consulta = self::ejecutarActualizacion("INSERT INTO equipo (nombre) VALUES (?);", [$nombre]);
-        return $consulta;
-    }
-
     public static function jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId): bool
     {
 
@@ -197,16 +167,6 @@ class DAO
         return $consulta;
     }
 
-
-
-    public static function equipoModificar($nombre, $id): bool
-    {
-        $consulta = self::ejecutarActualizacion("UPDATE equipo SET nombre=? WHERE id=?;",
-            [$id, $nombre]);
-        return $consulta;
-    }
-
-
     public static function jugadorModificar($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId,$jugadorId): bool
     {
         $consulta = self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=? , lesionado=?,categoriaId=?,equipoId=? WHERE jugadorId=?;",
@@ -214,74 +174,11 @@ class DAO
         return $consulta;
     }
 
-
     public static function jugadorCrearDesdeRs(array $fila): jugador
     {
         return new jugador($fila["pId"], $fila["pNombre"],$fila["pApellidos"],$fila["pDorsal"],$fila["pLesionado"],$fila["cId"],$fila["eId"]);
     }
 
-    private static function equipoCrearDesdeRs(array $fila): equipo
-    {
-        return new Equipo($fila["id"], $fila["nombre"]);
-    }
-
-    public static function EquipoObtenerPorId(int $id): ?equipo
-    {
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT * FROM equipo WHERE id=?",
-            [$id]
-        );
-        if ($rs) return self::equipoCrearDesdeRs($rs[0]);
-        else return null;
-    }
-
-    /*
-    public static function jugadorObtenerTodos(): array
-    {
-        $datos = [];
-
-        $rs = self::ejecutarConsulta(
-            "SELECT
-                    p.id     AS pId,
-                    p.nombre AS pNombre,
-                    p.apellidos AS pApellidos,
-                    p.dorsal AS pDorsal,
-                    p.lesionado AS pLesionado,
-                    c.id     AS cId,
-                    c.nombre AS cNombre,
-                    e.id AS eId,
-                    e.nombre AS eNombre
-                FROM
-                   jugador AS p INNER JOIN categoria AS c
-                   ON p.categoriaId = c.id
-                   INNER JOIN equipo AS e ON p.equipoId = e.id
-                ORDER BY p.nombre",
-            []
-        );
-
-        foreach ($rs as $fila) {
-            $jugador = self::jugadorCrearDesdeRs($fila);
-            array_push($datos, $jugador);
-        }
-
-        return $datos;
-    }*/
-
-    /*
-$conexion = obtenerPdoConexionBD();
-
-$mostrarLesionado = isset($_REQUEST["soloLesionado"]);
-
-session_start(); // Crear post-it vacío, o recuperar el que ya haya  (vacío o con cosas).
-if (isset($_REQUEST["soloLesionado"])) {
-    $_SESSION["soloLesionado"] = true;
-}
-if (isset($_REQUEST["todos"])) {
-    unset($_SESSION["soloLesionado"]);
-}
-
-$posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
-*/
 
     public static function jugadorObtenerTodos(): array
     {
@@ -328,6 +225,69 @@ $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
     }
 
 
+
+/*UTILIZADA EN CATEGORIA FICHA*/
+    public static function mostrarJugadores($id)
+    {
+
+        return   $rs = self::ejecutarConsultaMostrar(
+            "SELECT * FROM jugador WHERE categoriaId=? ORDER BY nombre",
+            [$id]
+        );
+
+    }
+
+    /*UTILIZADA EN JUGADOR FICHA*/
+    public static function mostrarJugadoresEquipo($id)
+    {
+
+        return   $rs = self::ejecutarConsultaMostrar(
+            "SELECT * FROM jugador WHERE equipoId=? ORDER BY nombre",
+            [$id]
+        );
+
+    }
+
+    private static function jugadorCrearDesdeRs1(array $fila): jugador
+    {
+        return new jugador($fila["jugadorId"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
+    }
+
+
+
+    /* FUNCIONES PARA EQUIPO */
+
+    public static function equipoCrear($nombre): bool
+    {
+        $consulta = self::ejecutarActualizacion("INSERT INTO equipo (nombre) VALUES (?);", [$nombre]);
+        return $consulta;
+    }
+
+
+    public static function equipoModificar($nombre, $id): bool
+    {
+        $consulta = self::ejecutarActualizacion("UPDATE equipo SET nombre=? WHERE id=?;",
+            [$id, $nombre]);
+        return $consulta;
+    }
+
+
+    private static function equipoCrearDesdeRs(array $fila): equipo
+    {
+        return new Equipo($fila["id"], $fila["nombre"]);
+    }
+
+    public static function EquipoObtenerPorId(int $id): ?equipo
+    {
+        $rs = self::ejecutarConsultaObtener(
+            "SELECT * FROM equipo WHERE id=?",
+            [$id]
+        );
+        if ($rs) return self::equipoCrearDesdeRs($rs[0]);
+        else return null;
+    }
+
+
     public static function equipoObtenerTodos(): array
     {
         $datos = [];
@@ -367,57 +327,7 @@ $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
         $resultado = $sentencia->fetchAll();
         return $resultado;
     }
-
-
-
-
-
-    /*public static function categoriaActualizar($id, $nombre)
-    {
-        self::ejecutarActualizacion(
-            "UPDATE Categoria SET nombre=? WHERE id=?",
-            [$nombre, $id]
-        );
-    }*/
-
-    /////JUGADOR////
-
-
-    public static function agregarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
-    {
-        self::ejecutarActualizacion("INSERT INTO jugador (nombre, apellidos, dorsal,lesionado,categoriaId,equipoId)
-            VALUES (?, ?, ?, ?, ?, ?);",
-            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
-    }
-
-
-    public static function modificarJugador($nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId)
-    {
-        self::ejecutarActualizacion("UPDATE jugador SET nombre=?, apellidos=?, dorsal=?, lesionado=?, categoriaId=? , equipoId=? WHERE id=?)
-            VALUES (?, ?, ?, ?, ?, ?);",
-            [$nombre, $apellidos, $dorsal, $lesionado, $categoriaId, $equipoId]);
-    }
-
-
-    public static function mostrarJugadores($id)
-    {
-
-        return   $rs = self::ejecutarConsultaMostrar(
-            "SELECT * FROM jugador WHERE categoriaId=? ORDER BY nombre",
-            [$id]
-        );
-
-    }
-
-public static function mostrarJugadoresEquipo($id)
-{
-
-    return   $rs = self::ejecutarConsultaMostrar(
-        "SELECT * FROM jugador WHERE equipoId=? ORDER BY nombre",
-        [$id]
-    );
-
-}
+ /*Necesario para mostrar jugadores en equipo y categoria*/
 
     private static function ejecutarConsultaMostrar(string $sql, array $parametros): array
     {
@@ -433,11 +343,9 @@ public static function mostrarJugadoresEquipo($id)
         return $rsJugadoresDelaCategoria;
     }
 
-    private static function jugadorCrearDesdeRs1(array $fila): jugador
-    {
-        return new jugador($fila["jugadorId"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
-    }
 
+
+    /*FUNCIONES DE SESIONES Y USUARIO*/
 
     public function usuarioObtener(string $nombreUsuario, string $contrasenna): array
     {
@@ -445,20 +353,12 @@ public static function mostrarJugadoresEquipo($id)
             "SELECT * FROM usuario WHERE nombreUsuario = ?  && contrasenna = ?",
             [$nombreUsuario,$contrasenna]);
 
-        /*if ($rs) return  $rs[0];
-        else return null;*/
         return  $rs[0];
-    }
-
-    public function obtenerUsuarioCreado(string $nombreUsuario): ?array
-    {
-        $sql = "SELECT * FROM usuario WHERE id = ?;";
-        ;
     }
 
     public function marcarSesionComoIniciada(array $arrayUsuario)
     {
-        // TODO Anotar en el post-it todos estos datos:
+
         $_SESSION["id"] = $arrayUsuario["id"];
         $_SESSION["nombreUsuario"] = $arrayUsuario["nombreUsuario"];
         $_SESSION["contrasenna"] = $arrayUsuario["contrasenna"];
@@ -466,9 +366,6 @@ public static function mostrarJugadoresEquipo($id)
 
     public function haySesionIniciada(): bool
     {
-        // TODO Pendiente hacer la comprobación.
-
-        // Está iniciada si isset($_SESSION["id"])
         return isset($_SESSION["id"]) ? true : false;
 
     }
@@ -479,37 +376,30 @@ public static function mostrarJugadoresEquipo($id)
         setcookie('codigoCookie', "");
         setcookie('nombreUsuario',"");
         unset($_SESSION);
-        // TODO session_destroy() y unset de $_SESSION (por si acaso).
+
     }
 
     public function borrarCookies()
     {
-        setcookie("nombreUsuario", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
-        setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.}
+        setcookie("nombreUsuario", "", time() - 3600);
+        setcookie("codigoCookie", "", time() - 3600); //borrar cookie en ese tiempo
     }
 
     public function establecerSesionCookie(array $arrayUsuario)
     {
         // Creamos un código cookie muy complejo (no necesariamente único).
-        $codigoCookie = generarCadenaAleatoria(32); // Random..
-        //.
+        $codigoCookie = generarCadenaAleatoria(32);
+
         self::ejecutarActualizacion(
             "UPDATE Usuario SET codigoCookie=? WHERE nombreUsuario=?",
             [$codigoCookie,$arrayUsuario["nombreUsuario"]]
         );
 
-        // Enviamos al cliente, en forma de cookies, el identificador y el codigoCookie:
+        // Enviamos al usuario, en forma de cookies, el usuario(nombre) y el codigoCookie:
         setcookie("nombreUsuario", $arrayUsuario["nombreUsuario"], time() + 600);
         setcookie("codigoCookie", $codigoCookie, time() + 600);
 
     }
 
-    public function destruirSesionRamYCookie()
-    {
-        session_destroy();
-        actualizarCodigoCookieEnBD(Null);
-        borrarCookies();
-        unset($_SESSION); // Por si acaso
-    }
 
 }

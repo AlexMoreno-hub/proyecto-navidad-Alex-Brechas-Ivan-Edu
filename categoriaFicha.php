@@ -11,28 +11,11 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
 
     $categoriaNombre = "<introduzca nombre>";
 
-} else { // Quieren VER la ficha de una posicion existente, cuyos datos se cargan.
-    /*
-        $sql = "SELECT nombre FROM categoria WHERE id=?";
-        $select = $conexion->prepare($sql);
-        $select->execute([$id]);
-        $rs = $select->fetchAll();*/
+} else {
     $categoria = dao::categoriaObtenerPorId($id);
     $categoriaNombre = $categoria->getNombreCategoria();
-    // Con esto, accedemos a los datos de la primera (y esperemos que única) fila que haya venido.
-    /* $rs=dao::categoriaModificar($id);
-     $categoriaNombre = $rs[1];/*/
+
  }
-
-/*mostrar jugador en categoria
-$sql = "SELECT * FROM jugador WHERE categoriaId=? ORDER BY nombre";
-
-$select = $conexion->prepare($sql);
-$select->execute([$id]);
-$rsJugadoresDeLaCategoria = $select->fetchAll();
-
-   $rsJugadoresDeLaCategoria= dao::mostrarJugadores($id);
-*/
 
 ?>
 

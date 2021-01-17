@@ -26,48 +26,12 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
     $jugadorCategoriaId = $jugador->getJugadorCategoriaId();
     $jugadorEquipoId = $jugador->getJugadorEquipoId();
 
-    /*// Quieren VER la ficha de una persona existente, cuyos datos se cargan.
-    $sqlPersona = "SELECT nombre, apellidos, dorsal, lesionado , equipoId ,categoriaId FROM jugador WHERE id=?";
-
-    $select = $conexion->prepare($sqlPersona);
-    $select->execute([$id]); // Se añade el parámetro a la consulta preparada.
-    $rsJugador = $select->fetchAll();
-
-    // Con esto, accedemos a los datos de la primera (y esperemos que única) fila que haya venido.
-    $jugadorNombre = $rsJugador[0]["nombre"];
-    $jugadorApellidos = $rsJugador[0]["apellidos"];
-    $jugadorDorsal = $rsJugador[0]["dorsal"];
-    $jugadorLesioando = ($rsJugador[0]["lesionado"] == 1);
-    $jugadorEquipo =$rsJugador[0]["equipoId"];
-    $jugadorCategoriaId = $rsJugador[0]["categoriaId"];
-    $jugadorEquipoId = $rsJugador[0]["equipoId"];*/
 }
 
 $rsCategorias= DAO::jugadorSelectCategoria();
 $rsEquipo= DAO::jugadorSelectEquipo();
 
-/*
-// Con lo siguiente se deja preparado un recordset con todas las categorías.
 
-$sqlCategorias = "SELECT id, nombre FROM categoria ORDER BY nombre";
-
-$select = $conexion->prepare($sqlCategorias);
-$select->execute([]);
-$rsCategorias = $select->fetchAll();
-
-
-
-$sqlEquipo = "SELECT id, nombre FROM equipo ORDER BY nombre";
-
-$select = $conexion->prepare($sqlEquipo);
-$select->execute([]);
-$rsEquipo = $select->fetchAll();
-
-// INTERFAZ:
-// jugadorNombre , apellidos..
-// jugadorDorsal
-// jugadorCategoriaId
-// rsCategorias*/
 ?>
 
 

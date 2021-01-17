@@ -46,7 +46,7 @@ $jugadores = dao::jugadorObtenerTodos();
             <td>
             <a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombreJugador() ?> </a>
                 <a href='jugadorLesionado.php?id=<?=$fila->getId()?>'>
-                    <img src='$urlImagen' width='20' height='20'></a>
+                    <img src='$urlImagen' width='25' height='15'></a>
             </td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorApellidos() ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorCategoriaId() ?> </a></td>
@@ -75,5 +75,10 @@ $jugadores = dao::jugadorObtenerTodos();
 <br />
 
 <a href='categoriaListado.php'>Gestionar listado de Posiciones</a>
+
+<br>
+<br>
+
+<a href="paginaPrincipal.php">Volver a la página principal</a>
 
 </body>

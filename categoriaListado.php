@@ -43,9 +43,9 @@ $categorias = DAO::categoriaObtenerTodas();
 <br />
 <br />
 <a href="equipoListado.php">Gestionar equipos</a>
-<br />
-<br />
-<a href="sesionCerrar.php">Cerrar sesion</a>
+<br>
+<br>
+<a href="paginaPrincipal.php">Volver a la página principal</a>
 
 </body>
 
