@@ -15,7 +15,7 @@ if ($arrayUsuario != null) {
     if (isset($_REQUEST["recordar"])) {
         DAO::establecerSesionCookie($arrayUsuario);
     }
-    redireccionar("categoriaListado.php");
+    redireccionar("paginaPrincipal.php");
 } else {
     redireccionar("sesionFormulario.php?datosErroneos");
 }
