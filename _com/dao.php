@@ -76,7 +76,7 @@ class DAO
     }
 
 
-
+/*Obtener la categoria mediante id*/
     public static function categoriaObtenerPorId(int $id): ?categoria
     {
         $rs = self::ejecutarConsultaObtener(
@@ -87,7 +87,7 @@ class DAO
         else return null;
     }
 
-
+/*Obtener todas categorias*/
     public static function categoriaObtenerTodas(): array
     {
         $datos = [];
@@ -119,6 +119,7 @@ class DAO
 
     /*FUNCIONES PARA JUGADOR */
 
+    /*necesario con rs1, sin select tablas*/
     public static function jugadorObtenerPorId(int $jugadorId): ?jugador
     {
         $rs = self::ejecutarConsultaObtener(
@@ -128,7 +129,7 @@ class DAO
         if ($rs) return self::jugadorCrearDesdeRs1($rs[0]);
         else return null;
     }
-
+/*Mostrar el select de categoria al crear/modificar jugador*/
     public static function jugadorSelectCategoria(): array
     {
         $rs = self::ejecutarConsulta(
@@ -137,7 +138,7 @@ class DAO
         );
         return $rs;
     }
-
+    /*Mostrar el select de equipo al crear/modificar jugador*/
     public static function jugadorSelectEquipo(): array
     {
         $rs = self::ejecutarConsulta(
@@ -157,7 +158,7 @@ class DAO
 
         return $resultado;
     }
-
+/*crear nuevo jugador*/
     public static function jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId): bool
     {
 
@@ -179,7 +180,7 @@ class DAO
         return new jugador($fila["pId"], $fila["pNombre"],$fila["pApellidos"],$fila["pDorsal"],$fila["pLesionado"],$fila["cId"],$fila["eId"]);
     }
 
-
+/*Mostrar todos los jugadores para jugador LISTADO*/
     public static function jugadorObtenerTodos(): array
     {
 
@@ -247,7 +248,7 @@ class DAO
         );
 
     }
-
+/*para obtener por id*/
     private static function jugadorCrearDesdeRs1(array $fila): jugador
     {
         return new jugador($fila["jugadorId"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
@@ -346,6 +347,9 @@ class DAO
 
 
     /*FUNCIONES DE SESIONES Y USUARIO*/
+
+
+    /*Obtener el usuario mediante el nombre y la contraseña, devuelve bien o null (no usuario creado)*/
     public static function usuarioObtener(string $nombreUsuario, string $contrasenna): ? usuario
     {
         $rs = self::ejecutarConsulta(
@@ -361,7 +365,7 @@ class DAO
         return new usuario($usuario["id"], $usuario["nombreUsuario"],$usuario["contrasenna"], $usuario["codigoCookie"]);
     }
 
-    
+/*obtenemos los datos del usuario sesion iniciada*/
     public function marcarSesionComoIniciada($usuario)
     {
 
@@ -384,13 +388,13 @@ class DAO
         unset($_SESSION);
 
     }
-
+/*metodo no utilizado*/
     public function borrarCookies()
     {
         setcookie("nombreUsuario", "", time() - 3600);
         setcookie("codigoCookie", "", time() - 3600); //borrar cookie en ese tiempo
     }
-
+/*creamos */
     public function establecerSesionCookie(array $arrayUsuario)
     {
         // Creamos un código cookie muy complejo (no necesariamente único).

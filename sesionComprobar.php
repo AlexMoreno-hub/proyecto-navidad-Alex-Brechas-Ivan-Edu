@@ -10,6 +10,7 @@ $contrasenna=$_REQUEST["contrasenna"];
 $arrayUsuario=DAO::usuarioObtener($nombreUsuario,$contrasenna);
 
 if ($arrayUsuario) {
+    /*si obtenemos usuario existente*/
     DAO::marcarSesionComoIniciada($arrayUsuario);
 
     if (isset($_REQUEST["recordar"]))

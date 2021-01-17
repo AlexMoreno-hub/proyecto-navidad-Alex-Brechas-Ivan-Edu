@@ -8,6 +8,7 @@ $id = (int)$_REQUEST["id"];
 
 $resultado = DAO::categoriaEliminar($id);
 
+/*si obtenemos borrar*/
 if($resultado)
     redireccionar("categoriaListado.php?eliminacionCorrecta");
 else
