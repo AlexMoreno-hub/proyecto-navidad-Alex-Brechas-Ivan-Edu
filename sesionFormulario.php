@@ -17,7 +17,7 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]);
 </head>
 
 <body>
-<!---->
+
 <h1>Iniciar Sesión</h1>
 <?php if ($datosErroneos) { ?>
     <p >No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>

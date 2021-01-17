@@ -1,5 +1,5 @@
 <?php
-//
+
 require_once "_com/_varios.php";
 
 $conexion = obtenerPdoConexionBD();

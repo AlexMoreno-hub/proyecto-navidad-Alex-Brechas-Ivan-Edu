@@ -3,7 +3,7 @@
 require_once "_varios.php";
 require_once "clases.php";
 
-//
+
 class DAO
 {
     private static $pdo = null;
