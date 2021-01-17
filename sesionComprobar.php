@@ -9,13 +9,13 @@ $contrasenna=$_REQUEST["contrasenna"];
 
 $arrayUsuario=DAO::usuarioObtener($nombreUsuario,$contrasenna);
 
-if ($arrayUsuario != null) {
+if ($arrayUsuario) {
     DAO::marcarSesionComoIniciada($arrayUsuario);
 
-    if (isset($_REQUEST["recordar"])) {
+    if (isset($_REQUEST["recordar"]))
         DAO::establecerSesionCookie($arrayUsuario);
-    }
     redireccionar("paginaPrincipal.php");
-} else {
+} else
     redireccionar("sesionFormulario.php?datosErroneos");
-}
+
+?>

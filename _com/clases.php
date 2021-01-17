@@ -154,6 +154,52 @@ class jugador extends Dato
 
 }
 
+class Usuario extends Dato
+{
+    use Identificable;
 
+    private string $identificador;
+
+    private string $nombre;
+
+    private string $apellidos;
+
+    private string $email;
+
+    private string $contrasenna;
+
+    private string $fotoPerfil;
+
+    public function __construct(int $id, string $nombreUsuario,  string $contrasenna)
+    {
+        $this->setId($id);
+        $this->setnombreUsuario($nombreUsuario);
+        $this->setContrasenna($contrasenna);
+    }
+
+
+
+    public function getnombreUsuario(): string
+    {
+        return $this->nombreUsuario;
+    }
+
+    public function setnombreUsuario(string $nombreUsuario)
+    {
+        $this->nombreUsuario = $nombreUsuario;
+    }
+
+    public function getContrasenna(): string
+    {
+        return $this->contrasenna;
+    }
+
+    public function setContrasenna(string $contrasenna)
+    {
+        $this->contrasenna = $contrasenna;
+    }
+
+
+}
 
 

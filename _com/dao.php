@@ -346,22 +346,28 @@ class DAO
 
 
     /*FUNCIONES DE SESIONES Y USUARIO*/
-
-    public function usuarioObtener(string $nombreUsuario, string $contrasenna): array
+    public static function usuarioObtener(string $nombreUsuario, string $contrasenna): ? usuario
     {
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM usuario WHERE nombreUsuario = ?  && contrasenna = ?",
-            [$nombreUsuario,$contrasenna]);
-
-        return  $rs[0];
+            "SELECT * FROM usuario WHERE nombreUsuario=? AND contrasenna =?",
+            [$nombreUsuario, $contrasenna]
+        );
+        if ($rs) return self::usuarioCrearDesdeRS($rs[0]);
+        else return null;
     }
 
-    public function marcarSesionComoIniciada(array $arrayUsuario)
+    private static function usuarioCrearDesdeRS(array $usuario): usuario
+    {
+        return new usuario($usuario["id"], $usuario["nombreUsuario"],$usuario["contrasenna"], $usuario["codigoCookie"]);
+    }
+
+    
+    public function marcarSesionComoIniciada($usuario)
     {
 
-        $_SESSION["id"] = $arrayUsuario["id"];
-        $_SESSION["nombreUsuario"] = $arrayUsuario["nombreUsuario"];
-        $_SESSION["contrasenna"] = $arrayUsuario["contrasenna"];
+        $_SESSION["id"] = $usuario->getId();
+        $_SESSION["nombreUsuario"] = $usuario->getNombreUsuario();
+        $_SESSION["contrasenna"] = $usuario->getContrasenna();
     }
 
     public function haySesionIniciada(): bool

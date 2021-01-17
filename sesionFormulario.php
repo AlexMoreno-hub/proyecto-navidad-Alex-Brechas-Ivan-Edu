@@ -20,7 +20,7 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]);
 
 <h1>Iniciar Sesión</h1>
 <?php if ($datosErroneos) { ?>
-    <p >No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>
+    <p >Usuario o contraseña no validos.</p>
 <?php } ?>
 <div>
     <form action='sesionComprobar.php' method='get'>
