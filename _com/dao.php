@@ -342,6 +342,22 @@ class DAO
         return $datos;
     }*/
 
+    /*
+$conexion = obtenerPdoConexionBD();
+
+$mostrarLesionado = isset($_REQUEST["soloLesionado"]);
+
+session_start(); // Crear post-it vacío, o recuperar el que ya haya  (vacío o con cosas).
+if (isset($_REQUEST["soloLesionado"])) {
+    $_SESSION["soloLesionado"] = true;
+}
+if (isset($_REQUEST["todos"])) {
+    unset($_SESSION["soloLesionado"]);
+}
+
+$posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
+*/
+
     public static function jugadorObtenerTodos(): array
     {
         $datos = [];
@@ -447,16 +463,37 @@ class DAO
 
     public static function mostrarJugadores($id)
     {
-        $datos = [];
 
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT * FROM jugador WHERE id=? ORDER BY nombre",
+        return   $rs = self::ejecutarConsultaMostrar(
+            "SELECT * FROM jugador WHERE categoriaId=? ORDER BY nombre",
             [$id]
         );
-        $datos= array($rs["id"],$rs["nombre"],$rs["apellido"],$rs["dorsal"],$rs["lesionado"],$rs["categoriaId"],$rs["equipoId"]);
-        return $datos;
+
     }
 
+public static function mostrarJugadoresEquipo($id)
+{
+
+    return   $rs = self::ejecutarConsultaMostrar(
+        "SELECT * FROM jugador WHERE equipoId=? ORDER BY nombre",
+        [$id]
+    );
+
+}
+
+    private static function ejecutarConsultaMostrar(string $sql, array $parametros): array
+    {
+        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
+
+        $select = self::$pdo->prepare($sql);
+        $select->execute($parametros);
+        $rsJugadoresDelaCategoria = $select->fetchAll();
+
+        foreach ($rsJugadoresDelaCategoria as $fila) {
+            echo "<li>$fila[nombre] $fila[apellidos]</li>";
+        }
+        return $rsJugadoresDelaCategoria;
+    }
 
     private static function jugadorCrearDesdeRs1(array $fila): jugador
     {

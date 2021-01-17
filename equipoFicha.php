@@ -63,15 +63,10 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
 
 
 <p>Jugadores que pertenecen actualmente :</p>
-<!--
-<ul>
 
-    foreach ($rsJugadoresDelEquipo as $fila) {
-        echo "<li>$fila[nombre] $fila[apellidos]</li>";
-    }
-
-</ul>
--->
+<?php
+$rsJugadoresDeLaCategoria= dao::mostrarJugadoresEquipo($id);
+?>
 
 <?php if (!$nuevaEntrada) { ?>
     <br />

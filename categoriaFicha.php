@@ -24,17 +24,16 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que no se cargan d
      $categoriaNombre = $rs[1];/*/
  }
 
-
-/*
+/*mostrar jugador en categoria
 $sql = "SELECT * FROM jugador WHERE categoriaId=? ORDER BY nombre";
 
 $select = $conexion->prepare($sql);
 $select->execute([$id]);
-
 $rsJugadoresDeLaCategoria = $select->fetchAll();
 
    $rsJugadoresDeLaCategoria= dao::mostrarJugadores($id);
 */
+
 ?>
 
 <html>
@@ -74,6 +73,12 @@ $rsJugadoresDeLaCategoria = $select->fetchAll();
 <br />
 
 <p>Personas que pertenecen actualmente a la categoría:</p>
+
+<ul>
+    <?php
+    $rsJugadoresDeLaCategoria= dao::mostrarJugadores($id);
+    ?>
+</ul>
 
 <ul>
 

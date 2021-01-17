@@ -4,11 +4,11 @@ require_once "_com/_varios.php";
 
 $conexion = obtenerPdoConexionBD();
 
-$id = $_REQUEST["id"];
+$jugadorId = $_REQUEST["id"];
 
-$sql = "UPDATE jugador SET lesionado = (NOT (SELECT lesionado FROM jugador WHERE id=?)) WHERE id=?";
+$sql = "UPDATE jugador SET lesionado = (NOT (SELECT lesionado FROM jugador WHERE id=?)) WHERE jugadorId=?";
 $sentencia = $conexion->prepare($sql);
-$sentencia->execute([$id, $id]);
+$sentencia->execute([$jugadorId, $jugadorId]);
 
 redireccionar("jugadorListado.php");
 ?>

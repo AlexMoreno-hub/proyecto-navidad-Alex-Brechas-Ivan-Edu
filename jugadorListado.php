@@ -1,50 +1,10 @@
 <?php
 require_once "_com/_varios.php";
 require_once "_com/dao.php";
-/*
-$conexion = obtenerPdoConexionBD();
 
-$mostrarLesionado = isset($_REQUEST["soloLesionado"]);
-
-session_start(); // Crear post-it vacío, o recuperar el que ya haya  (vacío o con cosas).
-if (isset($_REQUEST["soloLesionado"])) {
-    $_SESSION["soloLesionado"] = true;
-}
-if (isset($_REQUEST["todos"])) {
-    unset($_SESSION["soloLesionado"]);
-}
-
-$posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
-*/
 
 $jugadores = dao::jugadorObtenerTodos();
-/*
-$sql = "
-               SELECT
-                    p.id     AS pId,
-                    p.nombre AS pNombre,
-                    p.apellidos AS pApellidos,
-                    p.dorsal AS pDorsal,
-                    p.lesionado AS pLesionado,
-                    c.id     AS cId,
-                    c.nombre AS cNombre,
-                    e.id AS eId,
-                    e.nombre AS eNombre
-                FROM
-                   jugador AS p INNER JOIN categoria AS c
-                   ON p.categoriaId = c.id
-                   INNER JOIN equipo AS e ON p.equipoId = e.id
-                   $posibleClausulaWhere
-                ORDER BY p.nombre
-            ";
 
-$select = $conexion->prepare($sql);
-$select->execute([]);
-$rs = $select->fetchAll();
-
-
-// INTERFAZ:
-// $rs*/
 ?>
 
 

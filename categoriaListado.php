@@ -4,16 +4,6 @@ require_once "_com/_varios.php";
 
 $categorias = DAO::categoriaObtenerTodas();
 
-/*
-$conexion= obtenerPdoConexionBD();
-
-$sql = "SELECT id, nombre FROM categoria ORDER BY nombre";
-
-$select = $conexion->prepare($sql);
-$select->execute([]);
-$rs = $select->fetchAll();
-*/
-
 
 ?>
 
