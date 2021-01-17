@@ -36,18 +36,17 @@ $jugadores = dao::jugadorObtenerTodos();
     <?php
     foreach ($jugadores as $fila) { ?>
 
-        <tr>
-           <!-- <td>
-                <?php/*
-           echo "<a href='jugadorFicha.php?id=$fila->getId()'>";
-           echo "$fila->getNombreJugador()";
-           echo "</a>";
 
-           $urlImagen = $fila["pLesionado"] ? "img/cruz-roja.png" : "img/2.png";
-           echo " <a href='jugadorLesionado.php.php?id=$fila[pId]'><img src='$urlImagen' width='16' height='16'></a> ";
-           */?>
-            </td>-->
-            <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombreJugador() ?> </a></td>
+
+        <?php
+        $urlImagen = $fila->getJugadorLesioando() ? "img/cruz-roja.png" : "img/2.png";
+        ?>
+
+        <tr>
+            <td>
+            <a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombreJugador() ?> </a>
+                <a href='jugadorLesionado.php?id=<?=$fila->getId()?>'<img src='$urlImagen' width='16' height='16'></a>
+            </td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorApellidos() ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorCategoriaId() ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorDorsal() ?> </a></td>

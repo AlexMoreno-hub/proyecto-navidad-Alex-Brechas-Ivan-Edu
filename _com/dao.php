@@ -360,6 +360,18 @@ $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
 
     public static function jugadorObtenerTodos(): array
     {
+
+        $mostrarLesionado = isset($_REQUEST["soloLesionado"]);
+
+        session_start(); // Crear post-it vacío, o recuperar el que ya haya  (vacío o con cosas).
+        if (isset($_REQUEST["soloLesionado"])) {
+            $_SESSION["soloLesionado"] = true;
+        }
+        if (isset($_REQUEST["todos"])) {
+            unset($_SESSION["soloLesionado"]);
+        }
+
+        $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
         $datos = [];
 
         $rs = self::ejecutarConsulta(
@@ -377,6 +389,7 @@ $posibleClausulaWhere = $mostrarLesionado ? "WHERE p.lesionado=1" : "";
                    jugador AS p INNER JOIN categoria AS c
                    ON p.categoriaId = c.id
                    INNER JOIN equipo AS e ON p.equipoId = e.id
+                   $posibleClausulaWhere
                 ORDER BY p.nombre",
             []
         );
