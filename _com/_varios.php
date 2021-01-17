@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-//
+
 //no repetido, necesario para jugador lesionado
 function obtenerPdoConexionBD(): PDO
 {

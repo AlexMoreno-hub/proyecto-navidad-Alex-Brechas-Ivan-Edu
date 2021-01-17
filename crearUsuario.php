@@ -1,6 +1,6 @@
 <?php
 /*Falta*/
-//
+
 require_once "_com/_varios.php";
 require_once "_com/dao.php";
 
