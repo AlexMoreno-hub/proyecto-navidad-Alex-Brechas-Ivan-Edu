@@ -39,13 +39,13 @@ $jugadores = dao::jugadorObtenerTodos();
 
 
         <?php
-        $urlImagen = $fila->getJugadorLesioando() ? "img/cruz-roja.png" : "img/2.png";
+        $urlImagen = $fila->getJugadorLesioando() ? "proyecto-navidad-Alex-Brechas-Ivan-Edu/img/cruz-roja.png" : "proyecto-navidad-Alex-Brechas-Ivan-Edu/img/2.png";
         ?>
 
         <tr>
             <td>
             <a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombreJugador() ?> </a>
-                <a href='jugadorLesionado.php?id=<?=$fila->getId()?>'<img src='$urlImagen' width='16' height='16'></a>
+                <a href='jugadorLesionado.php?id=<?=$fila->getId()?>'><img src='$urlImagen' width='20' height='20'></a>
             </td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorApellidos() ?> </a></td>
             <td><a href='jugadorFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getJugadorCategoriaId() ?> </a></td>

@@ -17,8 +17,10 @@ $resultado=false;
 $datosNoModificados=false;
 
 if ($nuevaEntrada){
+
     $resultado=dao::jugadorCrear($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId);
     redireccionar("jugadorListado.php");
+
 }
 else {
     $datosNoModificados = DAO::jugadorModificar($nombre,$apellidos,$dorsal,$lesionado,$categoriaId,$equipoId,$jugadorId);
