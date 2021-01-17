@@ -77,21 +77,22 @@ INSERT INTO `jugador` (`jugadorId`, `nombre`, `apellidos`, `dorsal`,`lesionado`,
 (10, 'Jose', 'Gimenez', '2', 0, 2,3);
 
 
-CREATE TABLE `cliente` (
-  `idCliente` int(10) NOT NULL,
-  `usuarioCliente` varchar(25) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `contrasennaCliente` varchar(80) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `codigoCookieCliente` varchar(80) COLLATE utf8mb4_spanish2_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `nombreUsuario` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `contrasenna` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
+  `codigoCookie` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `cliente`
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `cliente` (`idCliente`, `usuarioCliente`, `contrasennaCliente`, `codigoCookieCliente`) VALUES
-(1, 'alex','$2y$10$E3tvrmh3oOMlyAIbJcoM9OWaHcVu/kzdpE7Yt33ovRuD5eof0I1qq', ''),
-(2, 'brechas', '$2y$10$YGyvxrOXe06JgdzW20nE3OT2KObnteubGG9qJzVW7DJbZZde67iA.',''),
-(3, 'c', '$2y$10$7LDtrBZY8sRbObQw.2ORwuJqM1LGxFxBxZ3SRv/9jQ5Rl8EEBu/C2', '');
+INSERT INTO `usuario` (`id`, `nombreUsuario`, `contrasenna`, `codigoCookie`) VALUES
+(0, 'alex', 'alex', NULL ),
+(1, 'brechas', 'brechas', NULL ),
+(3, 'prueba', 'prueba', NULL );
+
 
 
 ALTER TABLE `jugador`

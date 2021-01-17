@@ -3,6 +3,7 @@
 require_once "_varios.php";
 require_once "clases.php";
 
+
 class DAO
 {
     private static $pdo = null;
@@ -55,84 +56,6 @@ class DAO
     }
 
 
-
-    /*---------- Funciones generales ----------*/
-    public static function anotarCookieEnBDD($codigoCookie, $idUsuario): bool
-    {
-        $pdo = DAO::obtenerPdoConexionBD();
-        if ($codigoCookie == "NULL") {
-            $codigoCookie = NULL;
-        }
-        $sqlSentencia = "UPDATE cliente SET codigoCookieCliente=? WHERE idCliente=?";
-
-        $sqlUpdate = $pdo->prepare($sqlSentencia);
-        $sqlUpdate->execute([$codigoCookie, $idUsuario]);
-        if ($sqlUpdate->rowCount() == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static function iniciarSessionConCookie(): bool
-    {
-        if (isset($_COOKIE["usuarioCliente"]) && isset($_COOKIE["clave"])) {
-            $usuarioCliente = $_COOKIE["usuarioCliente"];
-            $codigoCookie = $_COOKIE["clave"];
-            $arrayUsuario = DAO::obtenerClienteConUsuario($usuarioCliente); //Obtener usuario con el identificador de la cookie
-            // Si hay un usuario con el identificador de la cookie
-            // Y ademas coincide el codigoCookie de la BDD y el codigoCookie de la cookie
-            if ($arrayUsuario && $arrayUsuario[0]["codigoCookieCliente"] == $codigoCookie) {
-                DAO::generarCookieRecordar($arrayUsuario); // Generamos otro codigo y renovamos la cookie
-                return true;
-            } else {
-                DAO::borrarCookieRecordar($arrayUsuario); // Borramos la cookie
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-
-    public static function haySesionIniciada(): bool
-    {
-        if (isset($_SESSION["usuarioCliente"])) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
-
-    public static function CerrarSesion()
-    {
-        // funcion que elimina sesion iniciada
-        session_start();
-        session_unset();
-        session_destroy();
-    }
-
-    public static function generarCookieRecordar(array $arrayUsuario)
-    {
-        // Creamos un código cookie muy complejo (no necesariamente único).
-        $codigoCookie = generarCadenaAleatoria(32); // Random...
-        $idCliente = $arrayUsuario[0]["idCliente"];
-        // actualizar el codigoCookie en la BDD
-        DAO::anotarCookieEnBDD($codigoCookie, $idCliente);
-        // anotar la cookie en el navegador
-        $usuarioCliente = $arrayUsuario[0]["usuarioCliente"];
-        $valorCookie = $codigoCookie;
-        setcookie("usuarioCliente", $usuarioCliente, time() + 86400);
-        setcookie("clave", $valorCookie, time() + 86400);
-    }
-    public static function marcarSesionComoIniciada($arrayUsuario)
-    {
-        $_SESSION["idCliente"] = $arrayUsuario[0]["idCliente"];
-        $_SESSION["usuarioCliente"] = $arrayUsuario[0]["usuarioCliente"];
-        $_SESSION["nombreCliente"] = $arrayUsuario[0]["nombreCliente"];
-        $_SESSION["apellidosCliente"] = $arrayUsuario[0]["apellidosCliente"];
-    }
 
 
 
@@ -249,7 +172,7 @@ class DAO
     public static function jugadorEliminar(int $id): ?int
     {
         $resultado = self::ejecutarActualizacion(
-            "DELETE FROM Jugador WHERE id=?",
+            "DELETE FROM Jugador WHERE jugadorId=?",
             [$id]
         );
 
@@ -515,5 +438,78 @@ public static function mostrarJugadoresEquipo($id)
         return new jugador($fila["jugadorId"], $fila["nombre"],$fila["apellidos"],$fila["dorsal"],$fila["lesionado"],$fila["categoriaId"],$fila["equipoId"]);
     }
 
+
+    public function usuarioObtener(string $nombreUsuario, string $contrasenna): array
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM usuario WHERE nombreUsuario = ?  && contrasenna = ?",
+            [$nombreUsuario,$contrasenna]);
+
+        /*if ($rs) return  $rs[0];
+        else return null;*/
+        return  $rs[0];
+    }
+
+    public function obtenerUsuarioCreado(string $nombreUsuario): ?array
+    {
+        $sql = "SELECT * FROM usuario WHERE id = ?;";
+        ;
+    }
+
+    public function marcarSesionComoIniciada(array $arrayUsuario)
+    {
+        // TODO Anotar en el post-it todos estos datos:
+        $_SESSION["id"] = $arrayUsuario["id"];
+        $_SESSION["nombreUsuario"] = $arrayUsuario["nombreUsuario"];
+        $_SESSION["contrasenna"] = $arrayUsuario["contrasenna"];
+    }
+
+    public function haySesionIniciada(): bool
+    {
+        // TODO Pendiente hacer la comprobación.
+
+        // Está iniciada si isset($_SESSION["id"])
+        return isset($_SESSION["id"]) ? true : false;
+
+    }
+
+    public function cerrarSesion()
+    {
+        session_destroy();
+        setcookie('codigoCookie', "");
+        setcookie('nombreUsuario',"");
+        unset($_SESSION);
+        // TODO session_destroy() y unset de $_SESSION (por si acaso).
+    }
+
+    public function borrarCookies()
+    {
+        setcookie("nombreUsuario", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
+        setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.}
+    }
+
+    public function establecerSesionCookie(array $arrayUsuario)
+    {
+        // Creamos un código cookie muy complejo (no necesariamente único).
+        $codigoCookie = generarCadenaAleatoria(32); // Random..
+        //.
+        self::ejecutarActualizacion(
+            "UPDATE Usuario SET codigoCookie=? WHERE nombreUsuario=?",
+            [$codigoCookie,$arrayUsuario["nombreUsuario"]]
+        );
+
+        // Enviamos al cliente, en forma de cookies, el identificador y el codigoCookie:
+        setcookie("nombreUsuario", $arrayUsuario["nombreUsuario"], time() + 600);
+        setcookie("codigoCookie", $codigoCookie, time() + 600);
+
+    }
+
+    public function destruirSesionRamYCookie()
+    {
+        session_destroy();
+        actualizarCodigoCookieEnBD(Null);
+        borrarCookies();
+        unset($_SESSION); // Por si acaso
+    }
 
 }
