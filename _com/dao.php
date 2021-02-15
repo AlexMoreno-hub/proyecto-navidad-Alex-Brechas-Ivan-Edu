@@ -366,7 +366,7 @@ class DAO
     }
 
 /*obtenemos los datos del usuario sesion iniciada*/
-    public function marcarSesionComoIniciada($usuario)
+    public static function marcarSesionComoIniciada($usuario)
     {
 
         $_SESSION["id"] = $usuario->getId();
@@ -374,13 +374,13 @@ class DAO
         $_SESSION["contrasenna"] = $usuario->getContrasenna();
     }
 
-    public function haySesionIniciada(): bool
+    public static function haySesionIniciada(): bool
     {
         return isset($_SESSION["id"]) ? true : false;
 
     }
 
-    public function cerrarSesion()
+    public static function cerrarSesion()
     {
         session_destroy();
         setcookie('codigoCookie', "");
@@ -389,7 +389,7 @@ class DAO
 
     }
 /*metodo no utilizado*/
-    public function borrarCookies()
+    public static function borrarCookies()
     {
         setcookie("nombreUsuario", "", time() - 3600);
         setcookie("codigoCookie", "", time() - 3600); //borrar cookie en ese tiempo
@@ -410,6 +410,9 @@ class DAO
         $arrayCookies["nombreUsuario"] = setcookie("nombreUsuario", $arrayUsuario->getnombreUsuario(), time() + 60 * 60);
         $arrayCookies["codigoCookie"] = setcookie("codigoCookie", $codigoCookie, time() + 60 * 60);
     }
+
+
+
 
 
 }

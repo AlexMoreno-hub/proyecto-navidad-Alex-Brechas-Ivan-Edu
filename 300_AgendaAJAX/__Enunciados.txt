@@ -1,0 +1,23 @@
+PARA PRÓXIMO DÍA:
+
+Objetivo: adaptar categoriasListado.php al modelo DAO.
+
+Copiar todo lo necesario de mi solución de agenda, y de 990_TiendaCursoPasado.
+
+Amoldar productoObtenerTodos() --> categoriaObtenerTodas()
+
+Crear clase Categoria.
+
+Y que funcione ese PHP con este modelo.
+
+
+
+PARA EL 26-DIC (AMBOS GRUPOS):
+
+Agenda completa en "formato DAO" subida al GIT PROPIO de cada uno.
+Orden sugerido:
+    - CategoriaListado
+    - CategoriaEliminar
+    - CategoriaFicha
+    - CategoriaGuardar
+    - Y luego, todo lo de Persona, mismo orden
